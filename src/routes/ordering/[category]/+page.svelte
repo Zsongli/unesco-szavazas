@@ -7,7 +7,6 @@
 	import FasArrowLeftLong from "~icons/fa6-solid/arrow-left-long";
 	import FasArrowRightLong from "~icons/fa6-solid/arrow-right-long";
 	import type { PageData } from "./$types";
-	import { goto } from "$app/navigation";
 
 	export let data: PageData;
 
@@ -41,36 +40,32 @@
 		isWaiting = false;
 	}
 	async function finalize() {
-		//TODO: finalize
 		finalized = true;
+		await fetch(`/ordering/${category}/finalize`, { method: "POST" });
 	}
 </script>
 
 <div class="max-w-2xl mx-auto px-4 py-2 bg-slate-800">
 	<div class="flex">
-		<div>
-			<button
-				on:click={() => goto(`/ordering/${data.navigationInfo.prevCategory}`, { invalidateAll: true })}
-			>
+		{#if data.navigationInfo.prevCategory}
+			<a href={`/ordering/${data.navigationInfo.prevCategory}`}>
 				<div class="flex items-center gap-2">
 					<FasArrowLeftLong />
 					<div>{data.navigationInfo.prevCategory}</div>
 				</div>
-			</button>
-		</div>
+			</a>
+		{/if}
 		<div class="grow" />
-		<div>
-			<button
-				on:click={() => goto(`/ordering/${data.navigationInfo.nextCategory}`, { invalidateAll: true })}
-			>
+		{#if data.navigationInfo.nextCategory}
+			<a href={`/ordering/${data.navigationInfo.nextCategory}`}>
 				<div class="flex items-center gap-2">
 					<div>{data.navigationInfo.nextCategory}</div>
 					<FasArrowRightLong />
 				</div>
-			</button>
-		</div>
+			</a>
+		{/if}
 	</div>
-	<div class="text-center text-2xl my-2">Kategória: {category}</div>
+	<div class="text-center text-2xl my-2">Sorrend - {category}</div>
 	{#if finalized}
 		<div>Véglegesítve</div>
 	{/if}
