@@ -1,3 +1,5 @@
+import { findFirst } from "$lib/utils";
+
 type PlacementRecord = {
     judge: number;
     category: number;
@@ -61,34 +63,14 @@ export let judgeTable: JudgeRecord[] = [
     { id: 1, name: "Mama" }
 ];
 
-type IndexWithTuple<T, U extends [keyof T]> = { [K in U[number]]: T[K]; };
-
-export function propsFromKey<Record, Key extends keyof Record, Props extends [keyof Record]>(
-    table: Record[],
-    props: Props,
-    key: Key,
-    keyVal: Record[Key]
-): IndexWithTuple<Record, Props> | undefined {
-    let arr = table.filter((x) => {
-        return x[key] == keyVal;
-    }).at(0);
-
-    if (arr === undefined) return undefined;
-
-    let res = props.reduce((obj, prop) => {
-        obj[prop] = arr![prop];
-        return obj;
-    }, {} as any);
-
-    return res;
-}
-
 export function propFromKey<Record, Key extends keyof Record, Prop extends keyof Record>(
     table: Record[],
     prop: Prop,
     key: Key,
     keyVal: Record[Key]
 ) {
-    return propsFromKey(table, [prop], key, keyVal)?.[prop];
+    let record = findFirst(table, x => x[key] == keyVal);
+    if (!record) return undefined;
+    return record[prop]
 }
 
