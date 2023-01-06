@@ -8,7 +8,7 @@ const db = new PrismaClient();
 db.$connect().then(async () => {
 
     if (await db.role.count() === 0) {
-        await db.role.create({ data: { name: "Default", permissions: ["vote", "register", "view-summary"] } });
+        await db.role.create({ data: { name: "Default", permissions: ["vote", "register", "view-results"] } });
     }
 
     if (await db.orderCategory.count() === 0) {

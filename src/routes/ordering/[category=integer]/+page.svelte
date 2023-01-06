@@ -67,9 +67,6 @@
 		{/if}
 	</div>
 	<div class="text-center text-2xl my-2">Sorrend - {categoryName}</div>
-	{#if finalized}
-		<div>Véglegesítve</div>
-	{/if}
 	<div class="py-2">
 		{#each order as el, i (el)}
 			<div class="flex bg-slate-600 border border-orange-500" animate:flip>
@@ -94,17 +91,19 @@
 			</div>
 		{/each}
 	</div>
-	{#if !finalized}
-		<div class="mx-auto w-fit">
+	<div class="mx-auto w-fit">
+		{#if finalized}
+			<div>Véglegesítve</div>
+		{:else}
 			<Button on:click={() => (finalizeConfirmationOpen = true)}>Véglegesítés</Button>
-		</div>
-	{/if}
+		{/if}
+	</div>
 </div>
 <Modal title="Biztos benne?" bind:open={finalizeConfirmationOpen} autoclose>
 	<p class="text-gray-500 dark:text-gray-400">Biztosan véglegesíti a jelenlegi rendezést?</p>
 	<p class="text-gray-500 dark:text-gray-400">
-		A véglegesítés után a "{categoryId}" nevű kategória sorrendjén nem változtathat többet. A többi,
-		még nem véglegesített kategória sorrendjén még fog tudni változtatni.
+		A véglegesítés után a "{categoryName}" nevű kategória sorrendjén nem változtathat többet. A
+		többi, még nem véglegesített kategória sorrendjén még fog tudni változtatni.
 	</p>
 	<svelte:fragment slot="footer">
 		<Button on:click={() => finalize()}>Véglegesítés</Button>
