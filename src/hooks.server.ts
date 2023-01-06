@@ -54,7 +54,8 @@ const auth: Handle = async ({ event, resolve }) => {
     const session = sessionIssuer.decode(token);
     if (!session) return await resolve(event);
 
-    if (await db.revokedToken.findFirst({ where: { value: token } })) {
+    const revokedTokenRecord = await db.revokedToken.findUnique({ where: { value: token } })
+    if (revokedTokenRecord) {
         event.cookies.delete("session_token");
         return await resolve(event);
     }

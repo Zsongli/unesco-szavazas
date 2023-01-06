@@ -1,12 +1,13 @@
 import type { PageServerLoad } from './$types';
 import { findFirst } from '$lib/utils';
 import { error } from '@sveltejs/kit';
+
 export const load = (async ({ params, locals }) => {
     if (!locals.session) throw error(401);
     if (!locals.session.user.role.permissions.includes('view-results')) throw error(403);
 
     const judgeId = params.judgeId;
-    const judgeRecord = await locals.db.user.findFirst({ where: { id: judgeId } });
+    const judgeRecord = await locals.db.user.findUnique({ where: { id: judgeId } });
     if (!judgeRecord) throw error(404);
 
     const categoryRecords = await locals.db.orderCategory.findMany();

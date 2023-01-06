@@ -33,7 +33,7 @@
 			dataChanged = false;
 			let res = await fetch(`/ordering/${categoryId}`, {
 				method: "POST",
-				body: JSON.stringify(order)
+				body: JSON.stringify(order.map((x) => x.id))
 			});
 			let data = await res.json();
 			console.log(data);
@@ -67,11 +67,12 @@
 		{/if}
 	</div>
 	<div class="text-center text-2xl my-2">Sorrend - {categoryName}</div>
+
 	<div class="py-2">
-		{#each order as el, i (el)}
+		{#each order as el, i (el.id)}
 			<div class="flex bg-slate-600 border border-orange-500" animate:flip>
 				<div class="pr-4">{i + 1}.</div>
-				<div class="grow">{el}</div>
+				<div class="grow">{el.name} ({el.country})</div>
 				<div class="flex items-center">
 					<button
 						on:click={() => trySwapAndUpdate(i, i + 1)}

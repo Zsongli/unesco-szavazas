@@ -1,6 +1,3 @@
-export function isAllDefined<T>(arr: (T | undefined)[]): arr is T[] {
-    return !arr.some(x => x === undefined);
-}
 
 export function mod(v: number, n: number) {
     return ((v % n) + n) % n;
