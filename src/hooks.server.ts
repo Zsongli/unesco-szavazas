@@ -6,13 +6,42 @@ import { PrismaClient } from "@prisma/client";
 
 const db = new PrismaClient();
 db.$connect().then(async () => {
-    const defaultRole = await db.role.findFirst();
-    if (!defaultRole) await db.role.create({ data: { name: "Default", permissions: [] } });
+
+    if (await db.role.count() === 0) {
+        await db.role.create({ data: { name: "Default", permissions: ["vote", "register", "view-summary"] } });
+    }
+
+    if (await db.orderCategory.count() === 0) {
+        await db.orderCategory.createMany({
+            data: [
+                { name: "Előadásmód" },
+                { name: "Díszlet" },
+                { name: "Információ" },
+                { name: "Tánc" },
+                { name: "Humor" }
+            ]
+        });
+
+    }
+
+    if (await db.class.count() === 0) {
+        await db.class.createMany({
+            data: [
+                { name: "9.A", country: "Kiribati" },
+                { name: "10.B", country: "Pakisztán" },
+                { name: "10.C", country: "Chile" },
+                { name: "10.D", country: "Montenegro" },
+                { name: "9.E", country: "Zimbabwe" },
+                { name: "9.F", country: "Belize" }
+            ]
+        });
+    }
+
 });
 
 const sessionIssuer = new SessionIssuer<App.Session>(env.JWT_SECRET);
 
-const populateLocals: Handle = async ({ event, resolve }) => { 
+const populateLocals: Handle = async ({ event, resolve }) => {
     event.locals.sessionIssuer = sessionIssuer;
     event.locals.db = db;
     return await resolve(event);

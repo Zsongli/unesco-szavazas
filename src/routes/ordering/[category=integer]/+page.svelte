@@ -10,7 +10,8 @@
 
 	export let data: PageData;
 
-	$: category = $page.params.category;
+	$: categoryId = $page.params.category;
+	$: categoryName = data.categoryName;
 	$: order = data.order;
 	$: finalized = data.finalized;
 
@@ -30,7 +31,7 @@
 		isWaiting = true;
 		while (dataChanged) {
 			dataChanged = false;
-			let res = await fetch(`/ordering/${category}`, {
+			let res = await fetch(`/ordering/${categoryId}`, {
 				method: "POST",
 				body: JSON.stringify(order)
 			});
@@ -41,31 +42,31 @@
 	}
 	async function finalize() {
 		finalized = true;
-		await fetch(`/ordering/${category}/finalize`, { method: "POST" });
+		await fetch(`/ordering/${categoryId}/finalize`, { method: "POST" });
 	}
 </script>
 
 <div class="max-w-2xl mx-auto px-4 py-2 bg-slate-800">
 	<div class="flex">
 		{#if data.navigationInfo.prevCategory}
-			<a href={`/ordering/${data.navigationInfo.prevCategory}`}>
+			<a href={`/ordering/${data.navigationInfo.prevCategory.id}`}>
 				<div class="flex items-center gap-2">
 					<FasArrowLeftLong />
-					<div>{data.navigationInfo.prevCategory}</div>
+					<div>{data.navigationInfo.prevCategory.name}</div>
 				</div>
 			</a>
 		{/if}
 		<div class="grow" />
 		{#if data.navigationInfo.nextCategory}
-			<a href={`/ordering/${data.navigationInfo.nextCategory}`}>
+			<a href={`/ordering/${data.navigationInfo.nextCategory.id}`}>
 				<div class="flex items-center gap-2">
-					<div>{data.navigationInfo.nextCategory}</div>
+					<div>{data.navigationInfo.nextCategory.name}</div>
 					<FasArrowRightLong />
 				</div>
 			</a>
 		{/if}
 	</div>
-	<div class="text-center text-2xl my-2">Sorrend - {category}</div>
+	<div class="text-center text-2xl my-2">Sorrend - {categoryName}</div>
 	{#if finalized}
 		<div>Véglegesítve</div>
 	{/if}
@@ -102,7 +103,7 @@
 <Modal title="Biztos benne?" bind:open={finalizeConfirmationOpen} autoclose>
 	<p class="text-gray-500 dark:text-gray-400">Biztosan véglegesíti a jelenlegi rendezést?</p>
 	<p class="text-gray-500 dark:text-gray-400">
-		A véglegesítés után a "{category}" nevű kategória sorrendjén nem változtathat többet. A többi,
+		A véglegesítés után a "{categoryId}" nevű kategória sorrendjén nem változtathat többet. A többi,
 		még nem véglegesített kategória sorrendjén még fog tudni változtatni.
 	</p>
 	<svelte:fragment slot="footer">
