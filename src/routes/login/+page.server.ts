@@ -1,29 +1,48 @@
-import { fail, redirect } from "@sveltejs/kit";
+import { fail, redirect, error, type ServerLoad } from "@sveltejs/kit";
 import type { Actions } from "@sveltejs/kit";
 import z from "zod";
+import { matches } from "$lib/server/auth/hashing";
 
-const loginPageSchema = z.object({
+export const load: ServerLoad = async ({ locals }) => {
+    if (locals.session) throw error(403);
+}
+
+const loginSchema = z.object({
     email: z.string({ required_error: "E-mail cím megadása szükséges!", invalid_type_error: "Hibás e-mail cím formátum!" }).trim().min(1, "E-mail cím megadása szükséges!").email("Hibás e-mail cím formátum!").endsWith("@szlgbp.hu", "Csak lászlós e-mail címek használhatóak!"),
     password: z.string({ required_error: "Jelszó megadása szükséges!", invalid_type_error: "Hibás jelszó formátum!" }).min(1, "Jelszó megadása szükséges!").min(8, "A jelszónak legalább 8 karakter hosszúnak kell lennie!")
 });
 
 export const actions: Actions = {
-    async default({ request }) {
+    async default({ request, cookies, locals }) {
+        if(locals.session) throw error(403);
+
         const formData = Object.fromEntries(await request.formData());
+        const { password: _, ...data } = formData;
 
-        const result = loginPageSchema.safeParse(formData);
+        const result = loginSchema.safeParse(formData);
 
-        if (!result.success) {
-            const { fieldErrors: errors } = result.error.flatten();
-            const { email } = formData;
+        if (!result.success) return fail(400, { data, errors: result.error.flatten().fieldErrors });
 
-            return fail(400, { data: { email }, errors });
-        } else {
-            const { email, password } = result.data;
+        const { email, password } = result.data;
 
-            // TODO: login logic
+        const user = await locals.db.user.findFirst({
+            where: {
+                email: email
+            },
+            include: {
+                role: {
+                    select: {
+                        name: true,
+                        permissions: true
+                    }
+                }
+            }
+        });
 
-            throw redirect(301, "/");
-        }
+        if (!user || !matches(password, user.password)) return fail(400, { data, message: "Az e-mail cím és a jelszó nem egyezik!" });
+
+        const { password: __, roleId, ...tokenData } = user;
+        cookies.set("session_token", locals.sessionIssuer.encode({ user: tokenData }, "7d"));
+        throw redirect(303, "/");
     }
-} 
+}

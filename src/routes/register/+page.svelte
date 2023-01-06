@@ -13,6 +13,7 @@
 	import FasEnvelope from "~icons/fa6-solid/envelope";
 	import FasKey from "~icons/fa6-solid/key";
 	import FasEye from "~icons/fa6-solid/eye";
+	import FasUser from "~icons/fa6-solid/user";
 	import FasEyeSlash from "~icons/fa6-solid/eye-slash";
 	import type { ActionData } from "./$types";
 	import toast from "svelte-french-toast";
@@ -25,7 +26,7 @@
 		() =>
 		async ({ result, update }) => {
 			if(result.type != "redirect" && result.type != "error" && result.data?.message) {
-				if (result.type === "failure" )
+				if (result.type === "failure")
 					toast.error(result.data.message);
 				else if(result.type === "success")
 					toast.success(result.data.message);
@@ -35,14 +36,14 @@
 </script>
 
 <svelte:head>
-	<title>Bejelentkezés • Unesco Szavazás</title>
+	<title>Regisztráció • Unesco Szavazás</title>
 </svelte:head>
 
 <div
 	class="w-full max-w-sm m-auto flex flex-col items-center gap-4 bg-gray-800 p-6 rounded-2xl mt-8"
 >
 	<Heading tag="h1" customSize="base" class="text-center text-3xl font-bold py-2"
-		>Bejelentkezés</Heading
+		>Regisztráció</Heading
 	>
 	<form method="post" use:enhance={submit} class="w-full flex flex-col gap-4">
 		<div class="flex flex-col">
@@ -60,6 +61,22 @@
 			</ButtonGroup>
 			{#if form?.errors?.email}
 				<Helper class="mt-2" color="red">{form.errors.email[0]}</Helper>
+			{/if}
+		</div>
+		<div class="flex flex-col">
+			<Label for="fullname" color={form?.errors?.fullname ? "red" : "gray"} class="mb-2">Teljes név</Label>
+			<ButtonGroup>
+				<InputAddon><FasUser /></InputAddon>
+				<Input
+					id="fullname"
+					name="fullname"
+					type="text"
+					value={form?.data?.fullname ?? ""}
+					placeholder="Gipsz Jakab"
+				/>
+			</ButtonGroup>
+			{#if form?.errors?.fullname}
+				<Helper class="mt-2" color="red">{form.errors.fullname[0]}</Helper>
 			{/if}
 		</div>
 		<div class="flex flex-col">
@@ -94,5 +111,4 @@
 		</div>
 		<Button type="submit" class="mt-2">Küldés</Button>
 	</form>
-	<P size="xs" class="place-self-start opacity-50">Új fiókot a DÖK regisztrálhat.</P>
 </div>
