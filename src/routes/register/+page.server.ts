@@ -1,6 +1,7 @@
 import { error, fail, type Actions } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
 import z from "zod";
+import { hash } from "$lib/server/auth/hashing";
 
 export const load: PageServerLoad = async ({ locals }) => {
     if (!locals.session) throw error(401);
@@ -38,7 +39,7 @@ export const actions: Actions = {
         await locals.db.user.create({
             data: {
                 email,
-                password,
+                password: hash(password),
                 name,
                 role: {
                     connect: {
