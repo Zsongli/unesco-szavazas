@@ -23,8 +23,8 @@ model User {
 
   createdAt      DateTime         @default(now())
   updatedAt      DateTime         @default(now()) @updatedAt
-  Placement      Placement[]
-  OrderFinalized OrderFinalized[]
+  placement      Placement[]
+  orderFinalized OrderFinalized[]
 }
 
 model Role {
@@ -38,14 +38,14 @@ model Class {
   id        Int         @id @default(autoincrement())
   name      String
   country   String
-  Placement Placement[]
+  placement Placement[]
 }
 
 model OrderCategory {
   id             Int              @id @default(autoincrement())
   name           String
-  Placement      Placement[]
-  OrderFinalized OrderFinalized[]
+  placement      Placement[]
+  orderFinalized OrderFinalized[]
 }
 
 model OrderFinalized {
