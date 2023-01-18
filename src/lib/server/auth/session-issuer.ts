@@ -1,4 +1,4 @@
-import { sign, verify, type JwtPayload } from "jsonwebtoken";
+import jwt from 'jsonwebtoken'
 
 interface Session {
     issued: Date;
@@ -6,16 +6,16 @@ interface Session {
 }
 
 export default class SessionIssuer<T extends Session> {
-    
+
     constructor(private privateKey: string) { }
 
     encode(data: Omit<T, keyof Session>, expiresIn?: string | number): string {
-        return sign(data, this.privateKey, expiresIn != null ? { expiresIn } : undefined);
+        return jwt.sign(data, this.privateKey, expiresIn != null ? { expiresIn } : undefined);
     }
 
     decode(token: string): T | null {
         try {
-            const { iat, exp, ...rest } = verify(token, this.privateKey) as JwtPayload;
+            const { iat, exp, ...rest } = jwt.verify(token, this.privateKey) as jwt.JwtPayload;
             return {
                 issued: new Date(iat! * 1000),
                 expires: exp != null ? new Date(exp * 1000) : undefined,
