@@ -21,7 +21,6 @@ db.$connect().then(async () => {
                 { name: "Humor" }
             ]
         });
-
     }
 
     if (await db.class.count() === 0) {

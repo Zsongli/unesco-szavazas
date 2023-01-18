@@ -6,19 +6,15 @@
 	import FabGithub from "~icons/fa6-brands/github";
 	import CustomUnescoGlobe from "~icons/custom/unesco-globe";
 	import CustomSzlgLogo from "~icons/custom/szlg-logo";
-	import { Toaster } from "svelte-french-toast";
+	import FlowbiteToaster from "$lib/components/flowbite-toast/Toaster.svelte";
 	import type { LayoutData } from "./$types";
 	import { enhance } from "$app/forms";
 
 	export var data: LayoutData;
 </script>
 
-<Toaster
-	toastOptions={{
-		style:
-			"background: rgb(31 41 55); color: rgb(156 163 175); border-radius: 9999px; padding-inline: 1em;"
-	}}
-/>
+<FlowbiteToaster />
+
 <Navbar class="border-b">
 	<NavBrand
 		href="/"

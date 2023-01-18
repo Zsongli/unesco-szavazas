@@ -25,11 +25,9 @@
 	const submit: SubmitFunction =
 		() =>
 		async ({ result, update }) => {
-			if(result.type != "redirect" && result.type != "error" && result.data?.message) {
-				if (result.type === "failure")
-					toast.error(result.data.message);
-				else if(result.type === "success")
-					toast.success(result.data.message);
+			if (result.type != "redirect" && result.type != "error" && result.data?.message) {
+				if (result.type === "failure") toast.error(result.data.message);
+				else if (result.type === "success") toast.success(result.data.message);
 			}
 			await update();
 		};
@@ -64,7 +62,9 @@
 			{/if}
 		</div>
 		<div class="flex flex-col">
-			<Label for="fullname" color={form?.errors?.fullname ? "red" : "gray"} class="mb-2">Teljes név</Label>
+			<Label for="fullname" color={form?.errors?.fullname ? "red" : "gray"} class="mb-2"
+				>Teljes név</Label
+			>
 			<ButtonGroup>
 				<InputAddon><FasUser /></InputAddon>
 				<Input
