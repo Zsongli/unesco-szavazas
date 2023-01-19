@@ -40,7 +40,7 @@
 				</div>
 			</div>
 		</Heading>
-		<P size="lg">{getMessage($page.status, $page.error?.message)}</P>
+		<P size="lg" align="center">{getMessage($page.status, $page.error?.message)}</P>
 	</div>
 
 	<P size="sm" align="center" class="opacity-50">

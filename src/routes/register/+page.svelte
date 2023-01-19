@@ -25,11 +25,11 @@
 	const submit: SubmitFunction =
 		() =>
 		async ({ result, update }) => {
+			await update();
 			if (result.type != "redirect" && result.type != "error" && result.data?.message) {
 				if (result.type === "failure") toast.error(result.data.message);
 				else if (result.type === "success") toast.success(result.data.message);
 			}
-			await update();
 		};
 </script>
 

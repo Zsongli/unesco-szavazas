@@ -1,4 +1,4 @@
-import { fail, type Actions } from "@sveltejs/kit";
+import { error, fail, type Actions } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
 import z from "zod";
 import { hash } from "$lib/server/auth/hashing";
@@ -33,10 +33,7 @@ export const actions: Actions = {
         if (user) return fail(400, { data, message: "Az e-mail cím már foglalt." });
 
         const defaultRoleRecord = await locals.db.role.findFirst();
-        if (!defaultRoleRecord) {
-            console.error("/register -> Couldn't assign default role as no roles exist");
-            return fail(400, { data, message: "Rendszerhiba történt" });
-        }
+        if (!defaultRoleRecord) throw error(500, "Couldn't assign default role as no roles exist");
 
         await locals.db.user.create({
             data: {
