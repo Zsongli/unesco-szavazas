@@ -1,42 +1,37 @@
-import type { Handle } from "@sveltejs/kit";
+import type { Handle, HandleServerError } from "@sveltejs/kit";
 import { sequence } from "@sveltejs/kit/hooks";
 import * as env from "$env/static/private";
 import SessionIssuer from "$lib/server/auth/session-issuer";
 import { PrismaClient } from "@prisma/client";
+import initDb from "$lib/server/init-db";
 
 const db = new PrismaClient();
-db.$connect().then(async () => {
-
-    if (await db.role.count() === 0) {
-        await db.role.create({ data: { name: "Default", permissions: ["vote", "register", "view-results"] } });
+db.$connect().then(async () => await initDb(db as Omit<typeof db, `$${string}`>, {
+    role: {
+        data: [
+            { name: "Default", permissions: ["vote", "register", "view-results"] }
+        ]
+    },
+    orderCategory: {
+        data: [
+            { name: "Előadásmód" },
+            { name: "Díszlet" },
+            { name: "Információ" },
+            { name: "Tánc" },
+            { name: "Humor" }
+        ]
+    },
+    class: {
+        data: [
+            { name: "9.A", country: "Kiribati" },
+            { name: "10.B", country: "Pakisztán" },
+            { name: "10.C", country: "Chile" },
+            { name: "10.D", country: "Montenegro" },
+            { name: "9.E", country: "Zimbabwe" },
+            { name: "9.F", country: "Belize" }
+        ]
     }
-
-    if (await db.orderCategory.count() === 0) {
-        await db.orderCategory.createMany({
-            data: [
-                { name: "Előadásmód" },
-                { name: "Díszlet" },
-                { name: "Információ" },
-                { name: "Tánc" },
-                { name: "Humor" }
-            ]
-        });
-    }
-
-    if (await db.class.count() === 0) {
-        await db.class.createMany({
-            data: [
-                { name: "9.A", country: "Kiribati" },
-                { name: "10.B", country: "Pakisztán" },
-                { name: "10.C", country: "Chile" },
-                { name: "10.D", country: "Montenegro" },
-                { name: "9.E", country: "Zimbabwe" },
-                { name: "9.F", country: "Belize" }
-            ]
-        });
-    }
-
-});
+}));
 
 const sessionIssuer = new SessionIssuer<App.Session>(env.JWT_SECRET);
 
