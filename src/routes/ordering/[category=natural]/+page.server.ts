@@ -11,7 +11,6 @@ export const load = (async ({ params, locals }) => {
 
 	const categoryRecord = await locals.db.orderCategory.findUnique({ where: { id: categoryId } });
 	if (!categoryRecord) throw error(404, "Category not found");
-	const categoriesLength = await locals.db.orderCategory.count();
 
 	const placementRecords = await locals.db.placement.findMany({ where: { categoryId: categoryRecord.id, userId: judgeId }, include: { class: true }, orderBy: { placement: 'asc' } });
 	const placementClassIds = placementRecords.map(x => x.classId);
@@ -23,23 +22,9 @@ export const load = (async ({ params, locals }) => {
 
 	const finalizedRecord = await locals.db.orderFinalized.findUnique({ where: { userId_categoryId: { categoryId: categoryRecord.id, userId: judgeId } } });
 
-	// This assumes that the ID counter started from 1
-	const nextCategory = await locals.db.orderCategory.findUniqueOrThrow({ where: { id: mod(categoryId, categoriesLength) + 1 } });
-	const prevCategory = await locals.db.orderCategory.findUniqueOrThrow({ where: { id: mod(categoryId - 2, categoriesLength) + 1 } });
-
 	return {
 		categoryName: categoryRecord.name,
 		order: combinedOrder,
 		finalized: !!finalizedRecord,
-		navigationInfo: {
-			nextCategory: {
-				id: nextCategory.id,
-				name: nextCategory.name
-			},
-			prevCategory: {
-				id: prevCategory.id,
-				name: prevCategory.name
-			}
-		}
 	};
 }) satisfies PageServerLoad;

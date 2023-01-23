@@ -1,12 +1,22 @@
 <script lang="ts">
-	import { page } from "$app/stores";
-	import { Button, Modal, Spinner } from "flowbite-svelte";
-	import { flip } from "svelte/animate";
-	import FasArrowDownLong from "~icons/fa6-solid/arrow-down-long";
-	import FasArrowUpLong from "~icons/fa6-solid/arrow-up-long";
-	import FasArrowLeftLong from "~icons/fa6-solid/arrow-left-long";
-	import FasArrowRightLong from "~icons/fa6-solid/arrow-right-long";
+	import { page, navigating } from "$app/stores";
 	import type { PageData } from "./$types";
+	import { enhance, type SubmitFunction } from "$app/forms";
+	import {
+		Button,
+		Modal,
+		Spinner,
+		P,
+		Span,
+		Popover
+	} from "flowbite-svelte";
+	import OrderableList from "$lib/components/OrderableList.svelte";
+	import { fade } from "svelte/transition";
+	import { expoOut } from "svelte/easing";
+	import FasCircleExclamation from "~icons/fa6-solid/circle-exclamation";
+	import FasCircleCheck from "~icons/fa6-solid/circle-check";
+	import toast from "svelte-french-toast";
+	import { browser } from "$app/environment";
 
 	export let data: PageData;
 
@@ -20,13 +30,14 @@
 
 	let finalizeConfirmationOpen = false;
 
-	function trySwapAndUpdate(i: number, j: number) {
-		if (finalized) return;
-		if (i < 0 || j < 0 || i >= order.length || j >= order.length) return;
+	function orderChanged(order: PageData["order"]) {
+		if (finalized || !browser || $navigating != null) return;
 		dataChanged = true;
-		[order[i], order[j]] = [order[j], order[i]];
 		if (!isWaiting) update();
 	}
+
+	$: orderChanged(order);
+	
 	async function update() {
 		isWaiting = true;
 		while (dataChanged) {
@@ -40,81 +51,107 @@
 		}
 		isWaiting = false;
 	}
-	async function finalize() {
-		finalized = true;
-		await fetch(`/ordering/${categoryId}/finalize`, { method: "POST" });
-	}
+
+	var isSubmitting = false;
+	const submitFinalize: SubmitFunction = () => {
+		isSubmitting = true;
+		return async ({ result, update }) => {
+			await update();
+			if (result.type != "redirect" && result.type != "error" && result.data?.message) {
+				if (result.type === "failure") toast.error(result.data.message);
+				else if (result.type === "success") toast.success(result.data.message);
+			}
+			isSubmitting = false;
+			finalizeConfirmationOpen = false;
+		};
+	};
 </script>
 
-<div class="max-w-2xl mx-auto px-4 py-2 bg-slate-800">
-	<div class="flex">
-		{#if data.navigationInfo.prevCategory}
-			<a href={`/ordering/${data.navigationInfo.prevCategory.id}`}>
-				<div class="flex items-center gap-2">
-					<FasArrowLeftLong />
-					<div>{data.navigationInfo.prevCategory.name}</div>
-				</div>
-			</a>
-		{/if}
-		<div class="grow" />
-		{#if data.navigationInfo.nextCategory}
-			<a href={`/ordering/${data.navigationInfo.nextCategory.id}`}>
-				<div class="flex items-center gap-2">
-					<div>{data.navigationInfo.nextCategory.name}</div>
-					<FasArrowRightLong />
-				</div>
-			</a>
-		{/if}
-	</div>
-	<div class="text-center text-2xl my-2">Sorrend - {categoryName}</div>
+<svelte:head>
+	<title>Sorrend • {categoryName} • Unesco Szavazás</title>
+</svelte:head>
 
-	<div class="py-2">
-		{#each order as el, i (el.id)}
-			<div class="flex bg-slate-600 border border-orange-500" animate:flip>
-				<div class="pr-4">{i + 1}.</div>
-				<div class="grow">{el.name} ({el.country})</div>
-				<div class="flex items-center">
-					<button
-						on:click={() => trySwapAndUpdate(i, i + 1)}
-						disabled={finalized || i == order.length - 1}
-						class="text-lime-600 disabled:text-red-600"
-					>
-						<FasArrowDownLong />
-					</button>
-					<button
-						on:click={() => trySwapAndUpdate(i - 1, i)}
-						disabled={finalized || i == 0}
-						class="text-lime-600 disabled:text-red-600"
-					>
-						<FasArrowUpLong />
-					</button>
-				</div>
-			</div>
-		{/each}
-	</div>
-	<div class="mx-auto w-fit">
-		{#if finalized}
-			<div>Véglegesítve</div>
-		{:else}
-			<Button on:click={() => (finalizeConfirmationOpen = true)}>Véglegesítés</Button>
-		{/if}
-	</div>
-</div>
-<Modal title="Biztos benne?" bind:open={finalizeConfirmationOpen} autoclose>
-	<p class="text-gray-500 dark:text-gray-400">Biztosan véglegesíti a jelenlegi rendezést?</p>
-	<p class="text-gray-500 dark:text-gray-400">
-		A véglegesítés után a "{categoryName}" nevű kategória sorrendjén nem változtathat többet. A
-		többi, még nem véglegesített kategória sorrendjén még fog tudni változtatni.
-	</p>
-	<svelte:fragment slot="footer">
-		<Button on:click={() => finalize()}>Véglegesítés</Button>
-		<Button color="alternative">Mégse</Button>
+<OrderableList
+	class="grow"
+	bind:items={order}
+	display={(entry) => ({ Osztály: entry.name, Ország: entry.country })}
+>
+	<svelte:fragment slot="grip-col-header">
+		<Button
+			color="green"
+			outline
+			class="!p-2"
+			size="xs"
+			disabled={finalized}
+			on:click={() => (finalizeConfirmationOpen = true)}
+			id="btn-finalize"
+		>
+			<FasCircleCheck />
+		</Button>
 	</svelte:fragment>
-</Modal>
+</OrderableList>
+<Popover triggeredBy="#btn-finalize" placement="left" class="text-xs"
+	>Szavazat véglegesítése</Popover
+>
 
-{#if isWaiting}
-	<div class="flex flex-col items-center gap-1 p-1">
-		<div>Mentés...</div>
-		<Spinner />
+{#if finalized}
+	<div
+		class="absolute top-0 left-0 w-full h-full bg-opacity-25 bg-black backdrop-blur-[1px] flex items-center justify-center gap-4 text-8xl rounded-md"
+		in:fade={{
+			duration: $navigating == null ? 500 : 0,
+			delay: $navigating == null ? 250 : 0,
+			easing: expoOut
+		}}
+	>
+		<FasCircleCheck class="dark:text-green-400 text-green-600" />
 	</div>
 {/if}
+
+{#if finalizeConfirmationOpen}
+	<div transition:fade={{ duration: 50 }}>
+		<Modal
+			title="Véglegesítés megerősítése"
+			size="sm"
+			bind:open={finalizeConfirmationOpen}
+			permanent
+		>
+			<div class="flex items-center jutify-between w-full">
+				<FasCircleExclamation class="text-7xl text-center mx-4" />
+				<div class="ml-6">
+					<P class="text-gray-500 dark:text-gray-400">
+						A véglegesítés után a(z) <Span>{categoryName}</Span> kategória sorrendjén nem változtathatsz
+						majd többet.
+					</P>
+				</div>
+			</div>
+			<P size="xl" align="center">Biztosan véglegesíted a jelenlegi sorrendet?</P>
+			<form
+				slot="footer"
+				action="/ordering/{categoryId}/finalize"
+				method="post"
+				use:enhance={submitFinalize}
+				class="flex w-full place-content-center gap-2"
+			>
+				<Button color="red" type="submit" disabled={isSubmitting} class="gap-2">
+					{#if isSubmitting}
+						<Spinner color="white" size="3" />
+					{/if}
+					Véglegesítés
+				</Button>
+				<Button
+					color="alternative"
+					type="button"
+					on:click={() => (finalizeConfirmationOpen = false)}
+					disabled={isSubmitting}>Mégse</Button
+				>
+			</form>
+		</Modal>
+	</div>
+{/if}
+
+<!-- {#if isWaiting}
+	<div class="flex flex-col items-center gap-1 p-1">
+		<div>Mentés...</div>
+		<Spinner color="gray" size="4" />
+	</div>
+{/if} -->
