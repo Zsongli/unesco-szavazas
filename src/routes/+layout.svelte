@@ -41,7 +41,7 @@
 </main>
 
 <footer
-	class="bg-white dark:bg-gray-800 rounded-lg p-4 flex flex-col items-center gap-4 sm:flex-row sm:justify-between"
+	class="bg-white dark:bg-gray-800 rounded-t-lg p-4 flex flex-col items-center gap-4 sm:flex-row sm:justify-between"
 >
 	<div class="flex gap-4">
 		<a href="/" class="flex items-center dark:text-white">
