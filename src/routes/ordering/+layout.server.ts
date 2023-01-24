@@ -1,11 +1,11 @@
-import { error } from "@sveltejs/kit";
 import type { LayoutServerLoad } from "./$types";
+import { assertVoterSession } from "$lib/server/ordering";
 
 export const load: LayoutServerLoad = async ({ locals }) => {
-    if (!locals.session) throw error(401);
-    if (!locals.session.user.role.permissions.includes('vote')) throw error(403);
+    assertVoterSession(locals.session);
+    const categories = locals.db.orderCategory.findMany({ select: { id: true, name: true } });
 
     return {
-        categories: locals.db.orderCategory.findMany({ orderBy: { id: 'asc' }, select: { id: true, name: true } })
+        categories: categories
     };
 };
