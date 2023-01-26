@@ -2,19 +2,14 @@
 	import { page, navigating } from "$app/stores";
 	import type { PageData } from "./$types";
 	import { enhance, type SubmitFunction } from "$app/forms";
-	import {
-		Button,
-		Modal,
-		Spinner,
-		P,
-		Span,
-		Popover
-	} from "flowbite-svelte";
+	import { Button, Modal, Spinner, P, Span, Popover } from "flowbite-svelte";
 	import OrderableList from "$lib/components/OrderableList.svelte";
 	import { fade } from "svelte/transition";
 	import { expoOut } from "svelte/easing";
 	import FasCircleExclamation from "~icons/fa6-solid/circle-exclamation";
+	import FasCircleQuestion from "~icons/fa6-solid/circle-question";
 	import FasCircleCheck from "~icons/fa6-solid/circle-check";
+	import FasMedal from "~icons/fa6-solid/medal";
 	import toast from "svelte-french-toast";
 	import { browser } from "$app/environment";
 
@@ -36,8 +31,8 @@
 		if (!isWaiting) update();
 	}
 
-	$: orderChanged(order);
-	
+	$: orderChanged(order); // FIXME: currently runs on initial page load
+
 	async function update() {
 		isWaiting = true;
 		while (dataChanged) {
@@ -72,7 +67,7 @@
 </svelte:head>
 
 <OrderableList
-	class="grow"
+	class="grow rounded-t-md w-full"
 	bind:items={order}
 	display={(entry) => ({ Osztály: entry.name, Ország: entry.country })}
 >
@@ -89,6 +84,18 @@
 			<FasCircleCheck />
 		</Button>
 	</svelte:fragment>
+	<div class="text-center" slot="index-col-header">Helyezés</div>
+		<div class="flex items-center justify-center text-center" slot="index-col" let:index>
+			{#if index === 0}
+				<FasMedal class="text-yellow-300" />
+			{:else if index === 1}
+				<FasMedal class="text-zinc-400" />
+			{:else if index === 2}
+				<FasMedal class="text-amber-800" />
+			{:else}
+				<span class="text-gray-500">{index + 1}.</span>
+			{/if}
+		</div>
 </OrderableList>
 <Popover triggeredBy="#btn-finalize" placement="left" class="text-xs"
 	>Szavazat véglegesítése</Popover
@@ -96,14 +103,23 @@
 
 {#if finalized}
 	<div
-		class="absolute top-0 left-0 w-full h-full bg-opacity-25 bg-black backdrop-blur-[1px] flex items-center justify-center gap-4 text-8xl rounded-md"
+		class="absolute top-0 left-0 w-full h-full bg-opacity-25 bg-black backdrop-blur-[1px] flex flex-col items-center justify-center gap-4 rounded-md"
 		in:fade={{
 			duration: $navigating == null ? 500 : 0,
 			delay: $navigating == null ? 250 : 0,
 			easing: expoOut
 		}}
 	>
-		<FasCircleCheck class="dark:text-green-400 text-green-600" />
+		<FasCircleCheck class="dark:text-green-400 text-green-600 text-8xl opacity-80" />
+		<Span class="text-3xl">Véglegesítve</Span>
+		<FasCircleQuestion id="finalized-help" class="absolute bottom-4 right-4 hover:text-gray-400" />
+		<Popover
+			triggeredBy="#finalized-help"
+			placement="left"
+			class="text-xs max-w-xs"
+			title="Véletlen volt?"
+			>Ha véletlen volt, semmi gond. A DÖK bármikor vissza tudja vonni a véglegesítést.</Popover
+		>
 	</div>
 {/if}
 
