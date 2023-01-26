@@ -1,6 +1,14 @@
 <script lang="ts">
 	import "../app.pcss";
-	import { Navbar, NavBrand, Button, FooterIcon } from "flowbite-svelte";
+	import {
+		Navbar,
+		NavBrand,
+		Button,
+		FooterIcon,
+		Avatar,
+		Dropdown,
+		DropdownItem
+	} from "flowbite-svelte";
 	import FasRightToBracket from "~icons/fa6-solid/right-to-bracket";
 	import FasRightFromBracket from "~icons/fa6-solid/right-from-bracket";
 	import FabGithub from "~icons/fa6-brands/github";
@@ -15,7 +23,7 @@
 
 <FlowbiteToaster />
 
-<Navbar class="border-b">
+<Navbar class="border-b" navDivClass="mx-auto flex justify-between items-center">
 	<NavBrand
 		href="/"
 		class="gap-2 py-2 px-4 rounded-xl dark:bg-white dark:bg-opacity-0 dark:hover:bg-opacity-10 bg-black bg-opacity-0 hover:bg-opacity-10"
@@ -29,9 +37,26 @@
 		{#if !data.user}
 			<Button href="/login"><FasRightToBracket class="mr-2 -ml-1" />Bejelentkezés</Button>
 		{:else}
-			<form action="/logout" method="post" use:enhance>
-				<Button type="submit" color="red"><FasRightFromBracket class="mr-2 -ml-1" />Kijelentkezés</Button>
-			</form>
+			<Button pill color="light" id="avatar" class="!p-1 sm:!pr-4 min-w-[50px]">
+				<Avatar
+					src="https://api.dicebear.com/5.x/initials/svg?seed={data.user.name}&scale=65"
+					class="sm:mr-2 min-w-min"
+				/>
+				<span class="hidden sm:inline">
+					{data.user.name}
+				</span>
+			</Button>
+			<Dropdown triggeredBy="#avatar" class="w-full py-1">
+				<div slot="header" class="px-4 py-2">
+					<span class="block text-sm text-gray-900 dark:text-white">{data.user.name} - {data.user.role.name}</span>
+					<span class="block truncate text-xs opacity-75">{data.user.email}</span>
+				</div>
+				<form slot="footer" action="/logout" method="post" use:enhance>
+					<DropdownItem type="submit" class="flex items-center gap-2 hover:!bg-red-600"
+						><FasRightFromBracket />Kijelentkezés</DropdownItem
+					>
+				</form>
+			</Dropdown>
 		{/if}
 	</div>
 </Navbar>
