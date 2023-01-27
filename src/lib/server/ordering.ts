@@ -26,20 +26,15 @@ export async function finalize(db: PrismaClient, judgeId: string, categoryId: nu
     await db.orderFinalized.create({ data: { categoryId: categoryId, userId: judgeId } });
 }
 
-
-export async function parseAndValidateOrderingFromRequestOrThrow(request: Request, db: PrismaClient) {
-    const classIdsOrdered = await parseOrderingFromRequestOrThrow(request);
-    await validateOrderingOrThrow(classIdsOrdered, db)
-    return classIdsOrdered;
-}
-
-const schema = z.array(z.number().int());
-export async function parseOrderingFromRequestOrThrow(request: Request) {
+const schema = z.object({
+    ordering: z.array(z.number().int()),
+    finalize: z.boolean(),
+})
+export async function parseOrderingRequestOrThrow(request: Request) {
     const dirtyData = await request.json().catch(() => ({}));
     const parseResult = schema.safeParse(dirtyData);
     if (!parseResult.success) throw error(400, "Invalid format");
-    const classIdsOrdered = parseResult.data;
-    return classIdsOrdered;
+    return parseResult.data;
 }
 
 export async function validateOrderingOrThrow(classIdsOrdered: number[], db: PrismaClient) {
@@ -52,7 +47,7 @@ export async function validateOrderingOrThrow(classIdsOrdered: number[], db: Pri
     if (!classRecords.every(x => orderClassIdSet.has(x.id))) throw error(400, "Couldn't find a class in the ordering");
 }
 
-export async function upsertClass(db: PrismaClient, judgeId: string, categoryId: number, classId: number, placement: number) {
+export async function upsertOrderingRecord(db: PrismaClient, judgeId: string, categoryId: number, classId: number, placement: number) {
     await db.placement.upsert({
         where: { userId_categoryId_classId: { categoryId: categoryId, classId: classId, userId: judgeId } },
         update: { placement: placement },

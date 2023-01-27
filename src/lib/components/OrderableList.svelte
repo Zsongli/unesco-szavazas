@@ -14,7 +14,7 @@
 	var container: HTMLTableSectionElement | null = null;
 	var containerRect: DOMRect | null = null;
 	$: updateRects(rows, container);
-	function updateRects(...args: any[]) {
+	function updateRects(...args: unknown[]) {
 		rowRects = rows.map((row) => row.getBoundingClientRect());
 		containerRect = container?.getBoundingClientRect() ?? null;
 	}
