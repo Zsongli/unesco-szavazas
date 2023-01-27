@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { TableHead, TableHeadCell, TableBodyCell } from "flowbite-svelte";
+	import { TableHead, TableBodyCell, Span } from "flowbite-svelte";
 	import { navigating } from "$app/stores";
 	import { flip } from "svelte/animate";
 	import FasGripLines from "~icons/fa6-solid/grip-lines";
@@ -88,13 +88,23 @@
 	<table class="w-full text-left text-sm text-gray-500 dark:text-gray-400 h-full">
 		<TableHead class="text-gray-700 dark:text-gray-400 bg-gray-50 dark:bg-gray-700">
 			{#if $$slots["index-col"]}
-				<th class="px-6 py-3 w-0 border-r border-gray-800 hidden sm:table-cell">
+				<th class="px-6 py-3 w-0 border-r border-gray-800">
 					<slot name="index-col-header" />
 				</th>
 			{/if}
 			{#each Object.keys(display(items[0])) as key}
-				<TableHeadCell>{key}</TableHeadCell>
+				<th class="hidden sm:table-cell px-6 py-3">{key}</th>
 			{/each}
+			<th class="sm:hidden table-cell px-6 py-3">
+				<div class="flex flex-col gap-1">
+					{#each Object.keys(display(items[0])) as key}
+						<div>
+							{key}
+						</div>
+					{/each}
+				</div>
+			</th>
+
 			<th class="flex items-center justify-end h-full px-4 py-4">
 				<slot name="grip-col-header" />
 			</th>
@@ -113,13 +123,14 @@
 					bind:this={rows[i]}
 				>
 					{#if $$slots["index-col"]}
-						<TableBodyCell class="border-r border-gray-700 hidden sm:table-cell">
+						<TableBodyCell class="border-r border-gray-700">
 							<slot name="index-col" index={i} />
 						</TableBodyCell>
 					{/if}
 
 					{#each Object.values(display(item)) as value}
 						<TableBodyCell
+							class="hidden sm:table-cell"
 							style={dropBeforeIndex !== -1 && dropBeforeIndex === i
 								? "box-shadow: 0 -4px 0 0 rgb(28 100 242);"
 								: ""}>{value}</TableBodyCell
@@ -127,14 +138,30 @@
 					{/each}
 
 					<TableBodyCell
-						class="flex items-center justify-end"
+						class="sm:hidden table-cell"
 						style={dropBeforeIndex !== -1 && dropBeforeIndex === i
 							? "box-shadow: 0 -4px 0 0 rgb(28 100 242);"
 							: ""}
 					>
-						<button class="cursor-grab flex items-center" on:pointerdown={(e) => dragstart(i, e)}>
-							<FasGripLines class="text-gray-500" />
-						</button>
+						<div class="flex flex-col gap-1">
+							{#each Object.values(display(item)) as value}
+								<Span>
+									{value}
+								</Span>
+							{/each}
+						</div>
+					</TableBodyCell>
+
+					<TableBodyCell
+						style={dropBeforeIndex !== -1 && dropBeforeIndex === i
+							? "box-shadow: 0 -4px 0 0 rgb(28 100 242);"
+							: ""}
+					>
+						<div class="w-full flex items-center justify-end">
+							<button class="cursor-grab flex items-center" on:pointerdown={(e) => dragstart(i, e)}>
+								<FasGripLines class="text-gray-500" />
+							</button>
+						</div>
 					</TableBodyCell>
 				</tr>
 			{/each}
