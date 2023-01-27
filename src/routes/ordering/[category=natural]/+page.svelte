@@ -26,7 +26,7 @@
 	let finalizeConfirmationOpen = false;
 
 	function orderChanged(order: PageData["order"]) {
-		if (finalized || !browser || $navigating != null) return;
+		if (isWatingForFinalizeSubmitting || finalized || !browser || $navigating != null) return;
 		dataChanged = true;
 		if (!isWaiting) update();
 	}
@@ -37,29 +37,31 @@
 		isWaiting = true;
 		while (dataChanged) {
 			dataChanged = false;
-			let res = await fetch(`/ordering/${categoryId}`, {
-				method: "POST",
-				body: JSON.stringify(order.map((x) => x.id))
-			});
-			let data = await res.json();
-			console.log(data);
+			await postOrdering(false);
 		}
 		isWaiting = false;
 	}
+	async function finalize() {
+		isWatingForFinalizeSubmitting = true;
+		await postOrdering(true);
+		toast.success("A kategória véglegesítése sikeresen megtörtént.");
+		isWatingForFinalizeSubmitting = false;
+		finalizeConfirmationOpen = false;
+		finalized = true;
+	}
+	async function postOrdering(finalize: boolean) {
+		let res = await fetch(`/ordering/${categoryId}`, {
+			method: "POST",
+			body: JSON.stringify({
+				finalize: finalize,
+				ordering: order.map((x) => x.id)
+			})
+		});
+		let data = await res.json();
+		console.log(data);
+	}
 
-	var isSubmitting = false;
-	const submitFinalize: SubmitFunction = () => {
-		isSubmitting = true;
-		return async ({ result, update }) => {
-			await update();
-			if (result.type != "redirect" && result.type != "error" && result.data?.message) {
-				if (result.type === "failure") toast.error(result.data.message);
-				else if (result.type === "success") toast.success(result.data.message);
-			}
-			isSubmitting = false;
-			finalizeConfirmationOpen = false;
-		};
-	};
+	var isWatingForFinalizeSubmitting = false;
 </script>
 
 <svelte:head>
@@ -85,17 +87,17 @@
 		</Button>
 	</svelte:fragment>
 	<div class="text-center" slot="index-col-header">Helyezés</div>
-		<div class="flex items-center justify-center text-center" slot="index-col" let:index>
-			{#if index === 0}
-				<FasMedal class="text-yellow-300" />
-			{:else if index === 1}
-				<FasMedal class="text-zinc-400" />
-			{:else if index === 2}
-				<FasMedal class="text-amber-800" />
-			{:else}
-				<span class="text-gray-500">{index + 1}.</span>
-			{/if}
-		</div>
+	<div class="flex items-center justify-center text-center" slot="index-col" let:index>
+		{#if index === 0}
+			<FasMedal class="text-yellow-300" />
+		{:else if index === 1}
+			<FasMedal class="text-zinc-400" />
+		{:else if index === 2}
+			<FasMedal class="text-amber-800" />
+		{:else}
+			<span class="text-gray-500">{index + 1}.</span>
+		{/if}
+	</div>
 </OrderableList>
 <Popover triggeredBy="#btn-finalize" placement="left" class="text-xs"
 	>Szavazat véglegesítése</Popover
@@ -141,15 +143,14 @@
 				</div>
 			</div>
 			<P size="xl" align="center">Biztosan véglegesíted a jelenlegi sorrendet?</P>
-			<form
-				slot="footer"
-				action="/ordering/{categoryId}/finalize"
-				method="post"
-				use:enhance={submitFinalize}
-				class="flex w-full place-content-center gap-2"
-			>
-				<Button color="red" type="submit" disabled={isSubmitting} class="gap-2">
-					{#if isSubmitting}
+			<div slot="footer" class="flex w-full place-content-center gap-2">
+				<Button
+					color="red"
+					on:click={() => finalize()}
+					disabled={isWatingForFinalizeSubmitting}
+					class="gap-2"
+				>
+					{#if isWatingForFinalizeSubmitting}
 						<Spinner color="white" size="3" />
 					{/if}
 					Véglegesítés
@@ -158,9 +159,9 @@
 					color="alternative"
 					type="button"
 					on:click={() => (finalizeConfirmationOpen = false)}
-					disabled={isSubmitting}>Mégse</Button
+					disabled={isWatingForFinalizeSubmitting}>Mégse</Button
 				>
-			</form>
+			</div>
 		</Modal>
 	</div>
 {/if}
