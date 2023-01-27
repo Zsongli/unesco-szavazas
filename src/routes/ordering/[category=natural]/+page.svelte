@@ -118,7 +118,7 @@
 			placement="left"
 			class="text-xs max-w-xs"
 			title="Véletlen volt?"
-			>Ha véletlen volt, semmi gond. A DÖK bármikor vissza tudja vonni a véglegesítést.</Popover
+			>A visszavonáshoz keresd meg valamelyik adminisztrátort!</Popover
 		>
 	</div>
 {/if}
