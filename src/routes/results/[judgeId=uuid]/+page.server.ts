@@ -17,7 +17,8 @@ export const load = (async ({ params, locals }) => {
     const classes = classRecords.map(x => ({ name: x.name, country: x.country }));
     const classIds = classRecords.map(x => x.id);
     const filtered = await locals.db.placement.findMany({ where: { userId: judgeId } });
-    const tableData = classIds.map(cl => categoryIds.map(cat => findFirst(filtered, x => x.classId == cl && x.categoryId == cat)?.placement));
+    const finalized = (await locals.db.orderFinalized.findMany({ where: { userId: judgeId } })).map(x => x.categoryId);
+    const tableData = classIds.map(cl => categoryIds.map(cat => finalized.includes(cat) ? findFirst(filtered, x => x.classId == cl && x.categoryId == cat)?.placement : undefined));
 
     return {
         categories: categories,
