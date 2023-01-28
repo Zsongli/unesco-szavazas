@@ -1,14 +1,12 @@
 <script lang="ts">
 	import {
 		Avatar,
-		Heading,
 		Span,
 		Table,
 		TableBody,
 		TableBodyCell,
 		TableBodyRow,
 		TableHead,
-		TableHeadCell
 	} from "flowbite-svelte";
 	import type { PageData } from "./$types";
 
@@ -18,8 +16,6 @@
 	$: categories = data.categories;
 	$: classes = data.classes;
 	$: judgeName = data.judgeName;
-
-	console.log(data);
 </script>
 
 <svelte:head>
