@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { page, navigating } from "$app/stores";
 	import type { PageData } from "./$types";
-	import { enhance, type SubmitFunction } from "$app/forms";
 	import { Button, Modal, Spinner, P, Span, Popover } from "flowbite-svelte";
 	import OrderableList from "$lib/components/OrderableList.svelte";
 	import { fade } from "svelte/transition";
@@ -65,7 +64,7 @@
 </script>
 
 <svelte:head>
-	<title>Sorrend • {categoryName} • Unesco Szavazás</title>
+	<title>Sorrend • {categoryName} • UNESCO Szavazás</title>
 </svelte:head>
 
 <OrderableList
@@ -99,6 +98,7 @@
 		{/if}
 	</div>
 </OrderableList>
+
 <Popover triggeredBy="#btn-finalize" placement="left" class="text-xs"
 	>Szavazat véglegesítése</Popover
 >
