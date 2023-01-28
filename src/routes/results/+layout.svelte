@@ -1,31 +1,86 @@
 <script lang="ts">
 	import { Avatar, Heading, Listgroup } from "flowbite-svelte";
 	import FasSquarePollVertical from "~icons/fa6-solid/square-poll-vertical";
+	import type { LayoutData } from "./$types";
+	import { page } from "$app/stores";
+
+	export var data: LayoutData;
 </script>
 
 <div class="max-w-xl mx-auto px-4 py-2 flex flex-col items-center gap-8 mt-4">
 	<Heading tag="h2" class="text-center">Eredmények</Heading>
 
-	<Listgroup active class="w-64">
-		<h3 class="text-center text-white font-bold py-2 bg-gray-700 rounded-t-lg">Szavazatok</h3>
-		<div class="max-h-48 overflow-y-scroll">
-			<!-- <a
-				href="/results/fb3197e8-3b2b-44e3-ace2-c4bd0f2f406f"
-				class="inline-flex relative items-center text-left py-2 px-4 w-full font-medium hover:bg-gray-100 hover:text-blue-700 dark:hover:bg-gray-600 dark:hover:text-white hover:underline focus:z-40 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:focus:ring-gray-500 dark:focus:text-white text-base gap-2"
+	<div class="flex flex-col items-center gap-12 w-full">
+		<Listgroup active class="min-w-fit w-3/4 max-w-[16rem]">
+			<h3 class="text-center text-white font-bold py-2 bg-gray-700 rounded-t-lg">Szavazatok</h3>
+			<div class="max-h-48 overflow-y-auto thin-scrollbar">
+				{#each data.judges as { id, name }}
+					<svelte:element
+						this={$page.params.judgeId === id ? "div" : "a"}
+						href={$page.params.judgeId === id ? undefined : `/results/${id}`}
+						class="judge-link {$page.params.judgeId === id ? 'selected' : ''}"
+					>
+						<Avatar
+							src="https://api.dicebear.com/5.x/initials/svg?seed={name}&scale=85"
+							size="xs"
+						/>
+						{name}
+					</svelte:element>
+				{/each}
+			</div>
+			<svelte:element
+				this={$page.url.pathname === "/results" ? "div" : "a"}
+				href={$page.url.pathname === "/results" ? undefined : "/results"}
+				class="summary-link {$page.url.pathname === "/results" ? 'selected' : ''}"
 			>
-				<Avatar src="https://api.dicebear.com/5.x/initials/svg?seed=Végh Béla&scale=85" size="xs"/>
-                Végh Béla
-			</a> -->
-		</div>
-		<a
-			href="/results"
-			class="flex items-center justify-center p-3 gap-2 font-bold bg-gray-50 hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 hover:underline rounded-b-lg"
-		>
-			<FasSquarePollVertical />Összesítés
-		</a>
-	</Listgroup>
+				<FasSquarePollVertical /> Összesítés
+			</svelte:element>
+		</Listgroup>
 
-	<div class="p-4 w-full bg-gray-800 rounded-lg relative">
-		<slot />
+		<div class="p-4 w-full bg-gray-800 rounded-lg relative">
+			<slot />
+		</div>
 	</div>
 </div>
+
+<style lang="postcss">
+	.judge-link {
+		@apply inline-flex relative items-center text-left py-2 px-4 w-full font-medium text-base gap-2;
+
+		&.selected {
+			@apply border-l-2 border-gray-500;
+		}
+
+		&:not(.selected) {
+			@apply hover:bg-gray-600 hover:text-white hover:underline focus:z-40 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:text-white;
+		}
+	}
+
+	.summary-link {
+		@apply flex items-center justify-center p-3 gap-2 font-bold bg-gray-700 rounded-b-lg;
+
+		&.selected {
+			@apply !border-gray-500 !border-t-2;
+		}
+
+		&:not(.selected) {
+			@apply hover:bg-gray-600 hover:underline hover:text-white;
+		}
+	}
+
+	.thin-scrollbar {
+		&::-webkit-scrollbar {
+			@apply w-2;
+		}
+		&::-webkit-scrollbar-track {
+			@apply bg-transparent;
+		}
+		&::-webkit-scrollbar-thumb {
+			@apply rounded-full bg-gray-600;
+		}
+
+		&::-webkit-scrollbar-thumb:hover {
+			@apply bg-gray-500;
+		}
+	}
+</style>
