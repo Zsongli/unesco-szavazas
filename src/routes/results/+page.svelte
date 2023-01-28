@@ -4,7 +4,6 @@
 	import FasSquarePollVertical from "~icons/fa6-solid/square-poll-vertical";
 
 	export var data: PageData;
-    console.log(data);
 </script>
 
 <svelte:head>
@@ -30,16 +29,16 @@
 						<div class="text-xs">{country}</div>
 					</div>
 				</TableBodyCell>
-				<!-- {#each data.tableData[i] as sum}
-					<TableBodyCell class="border-gray-700 text-center">{sum ?? ".."}.</TableBodyCell>
-				{/each} -->
+				{#each data.tableData[i] as sum}
+					<TableBodyCell class="border-gray-700 text-center">{sum}</TableBodyCell>
+				{/each}
 			</TableBodyRow>
 		{/each}
 	</TableBody>
 </Table>
 
 <style lang="postcss">
-    .text-vertical {
-        writing-mode: vertical-lr;
-    }
+	.text-vertical {
+		writing-mode: vertical-lr;
+	}
 </style>
