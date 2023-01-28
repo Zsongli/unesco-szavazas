@@ -1,5 +1,5 @@
-import type { ServerLoad } from "@sveltejs/kit";
+import type { PageServerLoad } from "./$types";
 
-export const load = (({})=>{
+export const load = (async ({})=>{
     return {};
-}) satisfies ServerLoad;
+}) satisfies PageServerLoad;

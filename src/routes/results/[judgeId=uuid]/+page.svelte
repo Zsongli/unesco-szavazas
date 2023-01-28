@@ -1,4 +1,15 @@
 <script lang="ts">
+	import {
+		Avatar,
+		Heading,
+		Span,
+		Table,
+		TableBody,
+		TableBodyCell,
+		TableBodyRow,
+		TableHead,
+		TableHeadCell
+	} from "flowbite-svelte";
 	import type { PageData } from "./$types";
 
 	export let data: PageData;
@@ -7,22 +18,44 @@
 	$: categories = data.categories;
 	$: classes = data.classes;
 	$: judgeName = data.judgeName;
+
+	console.log(data);
 </script>
 
-<div class="max-w-3xl mx-auto px-8">
-	<div class="text-center text-2xl my-2">{judgeName} összesítője</div>
-	<div class="border grid grid-cols-[0.5fr,0.1fr,1fr,1fr,1fr,1fr,1fr,1fr] text-center">
-		<div class="col-span-3" />
+<svelte:head>
+	<title>Eredmények • {judgeName} • UNESCO Szavazás</title>
+</svelte:head>
+
+<!-- TODO: show finalization status -->
+<Table divClass="relative overflow-x-auto rounded-t-lg" class="w-full">
+	<TableHead>
+		<th class="px-3 py-6 flex flex-col items-center justify-center gap-2">
+			<Avatar src="https://api.dicebear.com/5.x/initials/svg?seed={judgeName}&scale=85" border size="sm"></Avatar>
+			<Span class="text-center normal-case">{judgeName}</Span>
+		</th>
 		{#each categories as category}
-			<div>{category}</div>
+			<th class="py-3 text-vertical rotate-[179.9deg] border-gray-800 border-l">{category}</th>
 		{/each}
-		{#each classes as klass, i}
-			<div class="text-right">{klass.name}</div>
-			<div />
-			<div class="text-left">({klass.country})</div>
-			{#each tableData[i] as place}
-				<div>{place === undefined ? "?" : place.toString()}</div>
-			{/each}
+	</TableHead>
+	<TableBody>
+		{#each classes as { name, country }, i}
+			<TableBodyRow class="border-gray-600 divide-x">
+				<TableBodyCell>
+					<div class="flex flex-col items-center">
+						<div>{name}</div>
+						<div class="text-xs">{country}</div>
+					</div>
+				</TableBodyCell>
+				{#each tableData[i] as place}
+					<TableBodyCell class="border-gray-700 text-center">{place ?? ".."}.</TableBodyCell>
+				{/each}
+			</TableBodyRow>
 		{/each}
-	</div>
-</div>
+	</TableBody>
+</Table>
+
+<style lang="postcss">
+	.text-vertical {
+		writing-mode: vertical-lr;
+	}
+</style>
