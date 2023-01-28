@@ -30,7 +30,7 @@
 	>
 		<CustomUnescoGlobe class="text-2xl" />
 		<span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
-			Unesco Szavazás
+			UNESCO Szavazás
 		</span>
 	</NavBrand>
 	<div class="flex">

@@ -34,7 +34,7 @@
 </script>
 
 <svelte:head>
-	<title>Regisztráció • Unesco Szavazás</title>
+	<title>Regisztráció • UNESCO Szavazás</title>
 </svelte:head>
 
 <div
