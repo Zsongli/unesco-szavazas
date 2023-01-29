@@ -16,8 +16,8 @@
 </svelte:head>
 
 <div class="m-auto max-w-7xl flex flex-col items-center gap-2 mt-8 landscape:mt-16 px-8">
-	<div class="grid grid-rows-2 landscape:grid-cols-[3fr,2fr] min-h-fit gap-14">
-		<div class="flex flex-col gap-6 portrait:items-stretch portrait:lg:items-center portrait:text-center">
+	<div class="grid grid-rows-2 xl:grid-cols-[3fr,2fr] min-h-fit gap-14">
+		<div class="flex flex-col gap-6 xl:items-stretch items-center text-center xl:text-left">
 			<Heading tag="h2" class="!text-3xl sm:!text-4xl md:!text-5xl lg:!text-6xl">
 				Üdvözöllek az UNESCO műsorok <Span class="!text-blue-600 font-bold"
 					>szavazóalkalmazásában!</Span
@@ -39,7 +39,7 @@
 					A kezdéshez kérlek válassz az alábbi lehetőségek közül:
 				</p>
 				<div
-					class="flex flex-col justify-center gap-4 bg-gray-700 p-4 rounded-md sm:flex-row lg:w-fit landscape:justify-start"
+					class="flex flex-col justify-center gap-4 bg-gray-700 p-4 rounded-md self-stretch md:self-center sm:flex-row xl:self-stretch md:w-fit md:justify-start"
 				>
 					{#if data.user.role.permissions.includes("vote")}
 						<Button href="/ordering" class="gap-2 md:px-6 md:py-3.5 md:text-base">
@@ -54,7 +54,7 @@
 				</div>
 			{/if}
 		</div>
-		<a href="https://szlgbp.hu/2022/09/12/unesco-musor-2022/" rel="noreferrer" target="_blank" class="hidden landscape:block justify-self-end w-[420px] h-[420px] rounded-2xl overflow-hidden shadow-2xl">
+		<a href="https://szlgbp.hu/2022/09/12/unesco-musor-2022/" rel="noreferrer" target="_blank" class="hidden xl:block justify-self-end w-[420px] h-[420px] rounded-2xl overflow-hidden shadow-2xl">
 			<img class="w-full h-full object-cover object-center" src={photos[Math.floor(Math.random() * photos.length)]} alt="placeholder" />
         </a>
 	</div>
