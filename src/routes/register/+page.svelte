@@ -7,20 +7,22 @@
 		Input,
 		InputAddon,
 		Label,
-		P,
-		Helper
+		Helper,
+		Select
 	} from "flowbite-svelte";
 	import FasEnvelope from "~icons/fa6-solid/envelope";
 	import FasKey from "~icons/fa6-solid/key";
 	import FasEye from "~icons/fa6-solid/eye";
 	import FasUser from "~icons/fa6-solid/user";
 	import FasEyeSlash from "~icons/fa6-solid/eye-slash";
-	import type { ActionData } from "./$types";
+	import type { ActionData, PageData } from "./$types";
 	import toast from "svelte-french-toast";
 
+	export var data: PageData;
 	export var form: ActionData;
 
 	var showPassword = false;
+	var selectValue: string;
 
 	const submit: SubmitFunction =
 		() =>
@@ -37,7 +39,7 @@
 	<title>Regisztráció • UNESCO Szavazás</title>
 </svelte:head>
 
-<div class="w-full max-w-sm m-auto px-4 mt-8">
+<div class="w-full max-w-md m-auto px-4 mt-8">
 	<div class="w-full flex flex-col items-center gap-4 bg-gray-800 p-6 rounded-2xl">
 		<Heading tag="h1" customSize="base" class="text-center text-3xl font-bold py-2"
 			>Regisztráció</Heading
@@ -77,6 +79,19 @@
 				</ButtonGroup>
 				{#if form?.errors?.fullname}
 					<Helper class="mt-2" color="red">{form.errors.fullname[0]}</Helper>
+				{/if}
+			</div>
+			<div class="flex flex-col">
+				<Label for="role" class="mb-2" color={form?.errors?.role ? "red" : "gray"}>Szerepkör</Label>
+				<Select
+					id="role"
+					name="role"
+					placeholder="Válassz egyet..."
+					items={data.roles}
+					bind:value={selectValue}
+				/>
+				{#if form?.errors?.role}
+					<Helper class="mt-2" color="red">{form.errors.role[0]}</Helper>
 				{/if}
 			</div>
 			<div class="flex flex-col">
