@@ -9,7 +9,7 @@
 		Dropdown,
 		DropdownItem
 	} from "flowbite-svelte";
-	import FasRightToBracket from "~icons/fa6-solid/right-to-bracket";
+	import FasKey from "~icons/fa6-solid/key";
 	import FasRightFromBracket from "~icons/fa6-solid/right-from-bracket";
 	import FabGithub from "~icons/fa6-brands/github";
 	import CustomUnescoGlobe from "~icons/custom/unesco-globe";
@@ -51,7 +51,8 @@
 					>
 					<span class="block truncate text-xs opacity-75">{data.user.email}</span>
 				</div>
-				<form slot="default" action="/logout" method="post" use:enhance>
+				<DropdownItem href="/change-password" class="flex items-center gap-2"><FasKey />Jelszóváltoztatás</DropdownItem>
+				<form slot="footer" action="/logout" method="post" use:enhance>
 					<DropdownItem type="submit" class="flex items-center gap-2 hover:!bg-red-600"
 						><FasRightFromBracket />Kijelentkezés</DropdownItem
 					>
