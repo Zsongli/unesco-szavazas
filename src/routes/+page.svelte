@@ -31,7 +31,7 @@
 				<p class="text-sm sm:text-base md:text-lg lg:text-xl text-gray-400">
 					A kezdéshez kérlek jelentkezz be!
 				</p>
-				<Button href="/login" class="gap-2 md:px-6 md:py-3.5 md:text-base max-w-xs">
+				<Button href="/login" class="gap-2 md:px-6 md:py-3.5 md:text-base lg:max-w-xs">
 					<FasRightToBracket /> Bejelentkezés
 				</Button>
 			{:else}
