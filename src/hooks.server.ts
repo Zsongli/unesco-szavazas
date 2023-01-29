@@ -42,7 +42,7 @@ db.$connect()
                 {
                     email: "admin@szlgbp.hu",
                     name: "admin",
-                    password: hash("adminpass"),
+                    password: hash(env.DEFAULT_ADMIN_PASSWORD),
                     roleId: (await db.role.findUniqueOrThrow({ where: { name: "Admin" } })).id
                 }
             ]
@@ -64,7 +64,7 @@ const auth: Handle = async ({ event, resolve }) => {
     const session = sessionIssuer.decode(token);
     if (!session) return await resolve(event);
 
-    const revokedTokenRecord = await db.revokedToken.findUnique({ where: { value: token } })
+    const revokedTokenRecord = await db.revokedToken.findUnique({ where: { value: token } });
     if (revokedTokenRecord) {
         event.cookies.delete("session_token");
         return await resolve(event);
