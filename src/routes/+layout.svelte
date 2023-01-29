@@ -46,16 +46,18 @@
 			</Button>
 			<Dropdown triggeredBy="#avatar" class="w-full py-1">
 				<div slot="header" class="px-4 py-2">
-					<span class="block text-sm text-gray-900 dark:text-white"
-						>{data.user.name} - {data.user.role.name}</span
-					>
+					<span class="block text-sm text-gray-900 dark:text-white">
+						{data.user.name} - {data.user.role.name}
+					</span>
 					<span class="block truncate text-xs opacity-75">{data.user.email}</span>
 				</div>
-				<DropdownItem href="/change-password" class="flex items-center gap-2"><FasKey />Jelszóváltoztatás</DropdownItem>
+				<DropdownItem href="/change-password" class="flex items-center gap-2">
+					<FasKey />Jelszóváltoztatás
+				</DropdownItem>
 				<form slot="footer" action="/logout" method="post" use:enhance>
-					<DropdownItem type="submit" class="flex items-center gap-2 hover:!bg-red-600"
-						><FasRightFromBracket />Kijelentkezés</DropdownItem
-					>
+					<DropdownItem type="submit" class="flex items-center gap-2 hover:!bg-red-600">
+						<FasRightFromBracket />Kijelentkezés
+					</DropdownItem>
 				</form>
 			</Dropdown>
 		{/if}

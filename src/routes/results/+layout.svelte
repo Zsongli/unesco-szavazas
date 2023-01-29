@@ -31,7 +31,7 @@
 			<svelte:element
 				this={$page.url.pathname === "/results" ? "div" : "a"}
 				href={$page.url.pathname === "/results" ? undefined : "/results"}
-				class="summary-link {$page.url.pathname === "/results" ? 'selected' : ''}"
+				class="summary-link {$page.url.pathname === '/results' ? 'selected' : ''}"
 			>
 				<FasSquarePollVertical /> Összesítés
 			</svelte:element>

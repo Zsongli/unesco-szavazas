@@ -7,21 +7,27 @@
 
 	export var data: PageData;
 
-    const photos = ["https://szlgbp.hu/wp-content/uploads/2022/09/spanyol5_52333689069_o.jpg", "https://szlgbp.hu/wp-content/uploads/2022/09/ciprus2_52332435237_o.jpg", "https://szlgbp.hu/wp-content/uploads/2022/09/egyiptom4_52333626783_o.jpg", "https://szlgbp.hu/wp-content/uploads/2022/09/konferansz1_52332435717_o.jpg", "https://szlgbp.hu/wp-content/uploads/2022/09/kina2_52333819095_o.jpg", "https://szlgbp.hu/wp-content/uploads/2022/09/egyiptom0_52333688359_o.jpg"]
+	const photos = [
+		"https://szlgbp.hu/wp-content/uploads/2022/09/spanyol5_52333689069_o.jpg",
+		"https://szlgbp.hu/wp-content/uploads/2022/09/ciprus2_52332435237_o.jpg",
+		"https://szlgbp.hu/wp-content/uploads/2022/09/egyiptom4_52333626783_o.jpg",
+		"https://szlgbp.hu/wp-content/uploads/2022/09/konferansz1_52332435717_o.jpg",
+		"https://szlgbp.hu/wp-content/uploads/2022/09/kina2_52333819095_o.jpg",
+		"https://szlgbp.hu/wp-content/uploads/2022/09/egyiptom0_52333688359_o.jpg"
+	];
 </script>
 
 <svelte:head>
-    <title>Üdvözlet • UNESCO Szavazás</title>
-    <meta name="description" content="UNESCO Szavazás" />
+	<title>Üdvözlet • UNESCO Szavazás</title>
+	<meta name="description" content="UNESCO Szavazás" />
 </svelte:head>
 
 <div class="m-auto max-w-7xl flex flex-col items-center gap-2 mt-8 landscape:mt-16 px-8">
 	<div class="grid grid-rows-2 xl:grid-cols-[3fr,2fr] min-h-fit gap-14">
 		<div class="flex flex-col gap-6 xl:items-stretch items-center text-center xl:text-left">
 			<Heading tag="h2" class="!text-3xl sm:!text-4xl md:!text-5xl lg:!text-6xl">
-				Üdvözöllek az UNESCO műsorok <Span class="!text-blue-600 font-bold"
-					>szavazóalkalmazásában!</Span
-				>
+				Üdvözöllek az UNESCO műsorok
+				<Span class="!text-blue-600 font-bold">szavazóalkalmazásában!</Span>
 			</Heading>
 			<p class="text-sm sm:text-base md:text-lg lg:text-xl text-gray-400">
 				Itt szavazhatnak a zsűritagok a kedvenc UNESCO műsoraikra, az alkalmazás pedig összesíti a
@@ -54,8 +60,17 @@
 				</div>
 			{/if}
 		</div>
-		<a href="https://szlgbp.hu/2022/09/12/unesco-musor-2022/" rel="noreferrer" target="_blank" class="hidden xl:block justify-self-end w-[420px] h-[420px] rounded-2xl overflow-hidden shadow-2xl">
-			<img class="w-full h-full object-cover object-center" src={photos[Math.floor(Math.random() * photos.length)]} alt="placeholder" />
-        </a>
+		<a
+			href="https://szlgbp.hu/2022/09/12/unesco-musor-2022/"
+			rel="noreferrer"
+			target="_blank"
+			class="hidden xl:block justify-self-end w-[420px] h-[420px] rounded-2xl overflow-hidden shadow-2xl"
+		>
+			<img
+				class="w-full h-full object-cover object-center"
+				src={photos[Math.floor(Math.random() * photos.length)]}
+				alt="placeholder"
+			/>
+		</a>
 	</div>
 </div>
