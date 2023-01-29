@@ -13,8 +13,8 @@
 <Table divClass="relative overflow-x-auto rounded-t-lg" class="w-full">
 	<TableHead>
 		<th class="px-3 py-6 flex flex-col items-center justify-center gap-2">
-			<FasSquarePollVertical class="text-base" />
-			<Span class="text-center normal-case">Összesítés</Span>
+			<FasSquarePollVertical class="text-lg" />
+			<Span class="text-center normal-case text-lg">Összesítés</Span>
 		</th>
 		{#each data.categories as category}
 			<th class="py-3 text-vertical rotate-[179.9deg] border-gray-800 border-l">{category}</th>
