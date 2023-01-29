@@ -23,5 +23,4 @@ COPY --from=builder /app/prisma ./prisma
 
 EXPOSE 3000
 
-CMD ["pnpx", "prisma", "migrate", "deploy"]
-CMD ["node", "."]
+CMD ["sh", "-c", "npx prisma migrate deploy && node ."]
