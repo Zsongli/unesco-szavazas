@@ -7,9 +7,21 @@ services:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     ports:
-      - "5432:5432"
+      - 5432:5432
     volumes:
       - db:/var/lib/postgresql/data
+  nodeweb:
+    image: unesco-web
+    build: .
+    ports:
+      - 3000:3000
+    environment:
+      - JWT_SECRET=${JWT_SECRET}
+      - DATABASE_URL=${DATABASE_URL}
+      - ORIGIN=${ORIGIN}
+    depends_on:
+      - db
+
 volumes:
   db:
     driver: local
