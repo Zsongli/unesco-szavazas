@@ -1,37 +1,53 @@
-import type { Handle, HandleServerError } from "@sveltejs/kit";
+import type { Handle } from "@sveltejs/kit";
 import { sequence } from "@sveltejs/kit/hooks";
 import * as env from "$env/static/private";
 import SessionIssuer from "$lib/server/auth/session-issuer";
 import { PrismaClient } from "@prisma/client";
 import initDb from "$lib/server/init-db";
+import { hash } from "$lib/server/auth/hashing";
 
 const db = new PrismaClient();
-db.$connect().then(async () => await initDb(db as Omit<typeof db, `$${string}`>, {
-    role: {
-        data: [
-            { name: "Default", permissions: ["vote", "register", "view-results"] }
-        ]
-    },
-    orderCategory: {
-        data: [
-            { name: "Előadásmód" },
-            { name: "Díszlet" },
-            { name: "Információ" },
-            { name: "Tánc" },
-            { name: "Humor" }
-        ]
-    },
-    class: {
-        data: [
-            { name: "9.A", country: "Kiribati" },
-            { name: "10.B", country: "Pakisztán" },
-            { name: "10.C", country: "Chile" },
-            { name: "10.D", country: "Montenegro" },
-            { name: "9.E", country: "Zimbabwe" },
-            { name: "9.F", country: "Belize" }
-        ]
-    }
-}));
+db.$connect()
+    .then(async () => await initDb(db as Omit<typeof db, `$${string}`>, {
+        role: {
+            data: [
+                { name: "Admin", permissions: ["register", "view-results"] },
+                { name: "Zsűri", permissions: ["vote"] },
+                { name: "DÖK", permissions: ["view-results"] },
+            ]
+        },
+        orderCategory: {
+            data: [
+                { name: "Előadásmód" },
+                { name: "Díszlet" },
+                { name: "Információ" },
+                { name: "Tánc" },
+                { name: "Humor" }
+            ]
+        },
+        class: {
+            data: [
+                { name: "9.A", country: "Kiribati" },
+                { name: "10.B", country: "Pakisztán" },
+                { name: "10.C", country: "Chile" },
+                { name: "10.D", country: "Montenegro" },
+                { name: "9.E", country: "Zimbabwe" },
+                { name: "9.F", country: "Belize" }
+            ]
+        }
+    }))
+    .then(async () => await initDb(db as Omit<typeof db, `$${string}`>, {
+        user: {
+            data: [
+                {
+                    email: "admin@szlgbp.hu",
+                    name: "admin",
+                    password: hash("adminpass"),
+                    roleId: (await db.role.findUniqueOrThrow({ where: { name: "Admin" } })).id
+                }
+            ]
+        }
+    }));
 
 const sessionIssuer = new SessionIssuer<App.Session>(env.JWT_SECRET);
 
