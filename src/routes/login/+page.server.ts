@@ -2,6 +2,7 @@ import { fail, redirect, error, type ServerLoad } from "@sveltejs/kit";
 import type { Actions } from "@sveltejs/kit";
 import z from "zod";
 import { matches } from "$lib/server/auth/hashing";
+import * as env from "$env/static/private"
 
 export const load: ServerLoad = async ({ locals }) => {
     if (locals.session) throw error(403);
@@ -12,9 +13,11 @@ const loginSchema = z.object({
     password: z.string({ required_error: "Jelszó megadása szükséges!", invalid_type_error: "Hibás jelszó formátum!" }).min(1, "Jelszó megadása szükséges!").min(8, "A jelszónak legalább 8 karakter hosszúnak kell lennie!")
 });
 
+const secure = env.ORIGIN.startsWith("https://");
+
 export const actions: Actions = {
     async default({ request, cookies, locals }) {
-        if(locals.session) throw error(403);
+        if (locals.session) throw error(403);
 
         const formData = Object.fromEntries(await request.formData());
         const { password: _, ...data } = formData;
@@ -42,7 +45,7 @@ export const actions: Actions = {
         if (!user || !matches(password, user.password)) return fail(400, { data, message: "Az e-mail cím és a jelszó nem egyezik!" });
 
         const { password: __, roleId, ...tokenData } = user;
-        cookies.set("session_token", locals.sessionIssuer.encode({ user: tokenData }, "7d"));
+        cookies.set("session_token", locals.sessionIssuer.encode({ user: tokenData }, "7d"), { secure });
         throw redirect(303, "/");
     }
 }
