@@ -2,7 +2,7 @@ import type { PageServerLoad } from "./$types";
 import { getCategoryOrThrow, assertVoterSession, isFinalized } from "$lib/server/ordering";
 
 export const load = (async ({ params, locals }) => {
-	assertVoterSession(locals.session)
+	assertVoterSession(locals.session);
 
 	const judgeId = locals.session.user.id;
 	const categoryId = Number(params.category);
@@ -13,10 +13,10 @@ export const load = (async ({ params, locals }) => {
 		select: { class: { select: { id: true, name: true, country: true } } },
 		orderBy: { placement: 'asc' }
 	})).map(x => x.class);
-	const orderClassIds = order.map(x => x.id);
+	const orderClassIds = new Set<number>(order.map(x => x.id));
 
 	const classRecords = await locals.db.class.findMany({ select: { id: true, name: true, country: true } });
-	const remainingClasses = classRecords.filter(x => !orderClassIds.includes(x.id));
+	const remainingClasses = classRecords.filter(x => !orderClassIds.has(x.id));
 	const combinedOrder = [...order, ...remainingClasses];
 
 	const finalized = isFinalized(locals.db, judgeId, categoryId);

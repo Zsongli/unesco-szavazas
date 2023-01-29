@@ -51,8 +51,7 @@
 					>
 					<span class="block truncate text-xs opacity-75">{data.user.email}</span>
 				</div>
-				ide még kéne valami
-				<form slot="footer" action="/logout" method="post" use:enhance>
+				<form slot="default" action="/logout" method="post" use:enhance>
 					<DropdownItem type="submit" class="flex items-center gap-2 hover:!bg-red-600"
 						><FasRightFromBracket />Kijelentkezés</DropdownItem
 					>
