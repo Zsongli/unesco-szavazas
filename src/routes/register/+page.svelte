@@ -46,9 +46,9 @@
 		>
 		<form method="post" use:enhance={submit} class="w-full flex flex-col gap-4">
 			<div class="flex flex-col">
-				<Label for="email" color={form?.errors?.email ? "red" : "gray"} class="mb-2"
-					>E-mail cím</Label
-				>
+				<Label for="email" color={form?.errors?.email ? "red" : "gray"} class="mb-2">
+					E-mail cím
+				</Label>
 				<ButtonGroup>
 					<InputAddon><FasEnvelope /></InputAddon>
 					<Input
@@ -64,9 +64,9 @@
 				{/if}
 			</div>
 			<div class="flex flex-col">
-				<Label for="fullname" color={form?.errors?.fullname ? "red" : "gray"} class="mb-2"
-					>Teljes név</Label
-				>
+				<Label for="fullname" color={form?.errors?.fullname ? "red" : "gray"} class="mb-2">
+					Teljes név
+				</Label>
 				<ButtonGroup>
 					<InputAddon><FasUser /></InputAddon>
 					<Input
@@ -95,9 +95,9 @@
 				{/if}
 			</div>
 			<div class="flex flex-col">
-				<Label for="password" color={form?.errors?.password ? "red" : "gray"} class="mb-2"
-					>Jelszó</Label
-				>
+				<Label for="password" color={form?.errors?.password ? "red" : "gray"} class="mb-2">
+					Jelszó
+				</Label>
 				<ButtonGroup>
 					<InputAddon><FasKey /></InputAddon>
 					<Input
