@@ -1,4 +1,9 @@
 import { error, type Actions } from '@sveltejs/kit';
+import type { PageServerLoad } from './$types';
+
+export const load = (async () => {
+    throw error(405);
+}) satisfies PageServerLoad;
 
 export const actions: Actions = {
     async default({ locals, cookies }) {
