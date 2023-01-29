@@ -19,6 +19,8 @@
 		{#each data.categories as category}
 			<th class="py-3 text-vertical rotate-[179.9deg] border-gray-800 border-l">{category}</th>
 		{/each}
+		<th class="py-3 text-vertical rotate-[179.9deg] border-gray-800 border-l-2">Összesen</th>
+		<th class="py-3 text-vertical rotate-[179.9deg] border-gray-800 border-l">Helyezés</th>
 	</TableHead>
 	<TableBody>
 		{#each data.classes as { name, country }, i}
@@ -32,6 +34,20 @@
 				{#each data.tableData[i] as sum}
 					<TableBodyCell class="border-gray-700 text-center">{sum}</TableBodyCell>
 				{/each}
+				<TableBodyCell class="border-gray-700 !border-l-2 text-center">
+					{data.scores[i]}
+				</TableBodyCell>
+				<TableBodyCell class="border-gray-700 text-center"
+					>{#if data.placements[i] === 1}
+						<Span class="!text-yellow-400 text-xl">🥇</Span>
+					{:else if data.placements[i] === 2}
+						<Span class="!text-gray-400 text-xl">🥈</Span>
+					{:else if data.placements[i] === 3}
+						<Span class="!text-orange-400 text-xl">🥉</Span>
+					{:else}
+						<Span class="!text-gray-500">{data.placements[i]}.</Span>
+					{/if}
+				</TableBodyCell>
 			</TableBodyRow>
 		{/each}
 	</TableBody>
