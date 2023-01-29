@@ -37,78 +37,79 @@
 	<title>Regisztráció • UNESCO Szavazás</title>
 </svelte:head>
 
-<div
-	class="w-full max-w-sm m-auto flex flex-col items-center gap-4 bg-gray-800 p-6 rounded-2xl mt-8"
->
-	<Heading tag="h1" customSize="base" class="text-center text-3xl font-bold py-2"
-		>Regisztráció</Heading
-	>
-	<form method="post" use:enhance={submit} class="w-full flex flex-col gap-4">
-		<div class="flex flex-col">
-			<Label for="email" color={form?.errors?.email ? "red" : "gray"} class="mb-2">E-mail cím</Label
-			>
-			<ButtonGroup>
-				<InputAddon><FasEnvelope /></InputAddon>
-				<Input
-					id="email"
-					name="email"
-					type="text"
-					value={form?.data?.email ?? ""}
-					placeholder="gipsz.jakab.19x@szlgbp.hu"
-				/>
-			</ButtonGroup>
-			{#if form?.errors?.email}
-				<Helper class="mt-2" color="red">{form.errors.email[0]}</Helper>
-			{/if}
-		</div>
-		<div class="flex flex-col">
-			<Label for="fullname" color={form?.errors?.fullname ? "red" : "gray"} class="mb-2"
-				>Teljes név</Label
-			>
-			<ButtonGroup>
-				<InputAddon><FasUser /></InputAddon>
-				<Input
-					id="fullname"
-					name="fullname"
-					type="text"
-					value={form?.data?.fullname ?? ""}
-					placeholder="Gipsz Jakab"
-				/>
-			</ButtonGroup>
-			{#if form?.errors?.fullname}
-				<Helper class="mt-2" color="red">{form.errors.fullname[0]}</Helper>
-			{/if}
-		</div>
-		<div class="flex flex-col">
-			<Label for="password" color={form?.errors?.password ? "red" : "gray"} class="mb-2"
-				>Jelszó</Label
-			>
-			<ButtonGroup>
-				<InputAddon><FasKey /></InputAddon>
-				<Input
-					id="password"
-					name="password"
-					type={showPassword ? "text" : "password"}
-					placeholder={showPassword ? "szupertitkos" : "••••••••••••"}
-				/>
-				<InputAddon class="bg-transparent">
-					<button
-						class="cursor-pointer"
-						type="button"
-						on:click={() => (showPassword = !showPassword)}
-					>
-						{#if showPassword}
-							<FasEyeSlash />
-						{:else}
-							<FasEye />
-						{/if}
-					</button>
-				</InputAddon>
-			</ButtonGroup>
-			{#if form?.errors?.password}
-				<Helper class="mt-2" color="red">{form.errors.password[0]}</Helper>
-			{/if}
-		</div>
-		<Button type="submit" class="mt-2">Küldés</Button>
-	</form>
+<div class="w-full max-w-sm m-auto px-4 mt-8">
+	<div class="w-full flex flex-col items-center gap-4 bg-gray-800 p-6 rounded-2xl">
+		<Heading tag="h1" customSize="base" class="text-center text-3xl font-bold py-2"
+			>Regisztráció</Heading
+		>
+		<form method="post" use:enhance={submit} class="w-full flex flex-col gap-4">
+			<div class="flex flex-col">
+				<Label for="email" color={form?.errors?.email ? "red" : "gray"} class="mb-2"
+					>E-mail cím</Label
+				>
+				<ButtonGroup>
+					<InputAddon><FasEnvelope /></InputAddon>
+					<Input
+						id="email"
+						name="email"
+						type="text"
+						value={form?.data?.email ?? ""}
+						placeholder="gipsz.jakab.19x@szlgbp.hu"
+					/>
+				</ButtonGroup>
+				{#if form?.errors?.email}
+					<Helper class="mt-2" color="red">{form.errors.email[0]}</Helper>
+				{/if}
+			</div>
+			<div class="flex flex-col">
+				<Label for="fullname" color={form?.errors?.fullname ? "red" : "gray"} class="mb-2"
+					>Teljes név</Label
+				>
+				<ButtonGroup>
+					<InputAddon><FasUser /></InputAddon>
+					<Input
+						id="fullname"
+						name="fullname"
+						type="text"
+						value={form?.data?.fullname ?? ""}
+						placeholder="Gipsz Jakab"
+					/>
+				</ButtonGroup>
+				{#if form?.errors?.fullname}
+					<Helper class="mt-2" color="red">{form.errors.fullname[0]}</Helper>
+				{/if}
+			</div>
+			<div class="flex flex-col">
+				<Label for="password" color={form?.errors?.password ? "red" : "gray"} class="mb-2"
+					>Jelszó</Label
+				>
+				<ButtonGroup>
+					<InputAddon><FasKey /></InputAddon>
+					<Input
+						id="password"
+						name="password"
+						type={showPassword ? "text" : "password"}
+						placeholder={showPassword ? "szupertitkos" : "••••••••••••"}
+					/>
+					<InputAddon class="bg-transparent">
+						<button
+							class="cursor-pointer"
+							type="button"
+							on:click={() => (showPassword = !showPassword)}
+						>
+							{#if showPassword}
+								<FasEyeSlash />
+							{:else}
+								<FasEye />
+							{/if}
+						</button>
+					</InputAddon>
+				</ButtonGroup>
+				{#if form?.errors?.password}
+					<Helper class="mt-2" color="red">{form.errors.password[0]}</Helper>
+				{/if}
+			</div>
+			<Button type="submit" class="mt-2">Küldés</Button>
+		</form>
+	</div>
 </div>
