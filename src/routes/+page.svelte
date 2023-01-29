@@ -42,7 +42,7 @@
 					class="flex flex-col justify-center gap-4 bg-gray-700 p-4 rounded-md sm:flex-row lg:w-fit landscape:justify-start"
 				>
 					{#if data.user.role.permissions.includes("vote")}
-						<Button href="/ordering/1" class="gap-2 md:px-6 md:py-3.5 md:text-base">
+						<Button href="/ordering" class="gap-2 md:px-6 md:py-3.5 md:text-base">
 							<FasTableList /> Szavazás
 						</Button>
 					{/if}
