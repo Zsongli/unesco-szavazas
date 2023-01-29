@@ -3,11 +3,12 @@
 	import FasSquarePollVertical from "~icons/fa6-solid/square-poll-vertical";
 	import type { LayoutData } from "./$types";
 	import { page } from "$app/stores";
+	import "$lib/styles/results.pcss";
 
 	export var data: LayoutData;
 </script>
 
-<div class="max-w-2xl mx-auto px-4 py-2 flex flex-col items-center gap-8 mt-4">
+<div class="max-w-xl mx-auto px-4 py-2 flex flex-col items-center gap-8 mt-4">
 	<Heading tag="h2" class="text-center">Eredmények</Heading>
 
 	<div class="flex flex-col items-center gap-12 w-full">
@@ -65,22 +66,6 @@
 
 		&:not(.selected) {
 			@apply hover:bg-gray-600 hover:underline hover:text-white;
-		}
-	}
-
-	.thin-scrollbar {
-		&::-webkit-scrollbar {
-			@apply w-2;
-		}
-		&::-webkit-scrollbar-track {
-			@apply bg-transparent;
-		}
-		&::-webkit-scrollbar-thumb {
-			@apply rounded-full bg-gray-600;
-		}
-
-		&::-webkit-scrollbar-thumb:hover {
-			@apply bg-gray-500;
 		}
 	}
 </style>

@@ -2,6 +2,7 @@
 	import { Span, Table, TableBody, TableBodyCell, TableBodyRow, TableHead } from "flowbite-svelte";
 	import type { PageData } from "./$types";
 	import FasSquarePollVertical from "~icons/fa6-solid/square-poll-vertical";
+	import "$lib/styles/results.pcss";
 
 	export var data: PageData;
 </script>
@@ -10,7 +11,7 @@
 	<title>Eredmények • Összesítés • UNESCO Szavazás</title>
 </svelte:head>
 
-<Table divClass="relative overflow-x-auto rounded-t-lg" class="w-full">
+<Table divClass="relative overflow-x-auto rounded-t-lg thin-scrollbar" class="w-full">
 	<TableHead>
 		<th class="px-3 py-6 flex flex-col items-center justify-center gap-2">
 			<FasSquarePollVertical class="text-lg" />
@@ -52,9 +53,3 @@
 		{/each}
 	</TableBody>
 </Table>
-
-<style lang="postcss">
-	.text-vertical {
-		writing-mode: vertical-lr;
-	}
-</style>

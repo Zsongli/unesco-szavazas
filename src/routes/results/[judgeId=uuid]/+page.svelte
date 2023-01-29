@@ -9,6 +9,7 @@
 		TableHead,
 	} from "flowbite-svelte";
 	import type { PageData } from "./$types";
+	import "$lib/styles/results.pcss";
 
 	export let data: PageData;
 
@@ -23,7 +24,7 @@
 </svelte:head>
 
 <!-- TODO: show finalization status -->
-<Table divClass="relative overflow-x-auto rounded-t-lg" class="w-full">
+<Table divClass="relative overflow-x-auto rounded-t-lg thin-scrollbar" class="w-full">
 	<TableHead>
 		<th class="px-3 py-6 flex flex-col items-center justify-center gap-2">
 			<Avatar src="https://api.dicebear.com/5.x/initials/svg?seed={judgeName}&scale=85" border size="sm"></Avatar>
@@ -49,9 +50,3 @@
 		{/each}
 	</TableBody>
 </Table>
-
-<style lang="postcss">
-	.text-vertical {
-		writing-mode: vertical-lr;
-	}
-</style>
