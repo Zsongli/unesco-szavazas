@@ -54,7 +54,7 @@
 				</div>
 			{/if}
 		</div>
-		<a href="https://szlgbp.hu/2022/09/12/unesco-musor-2022/" class="hidden landscape:block justify-self-end w-[420px] h-[420px] rounded-2xl overflow-hidden shadow-2xl">
+		<a href="https://szlgbp.hu/2022/09/12/unesco-musor-2022/" rel="noreferrer" target="_blank" class="hidden landscape:block justify-self-end w-[420px] h-[420px] rounded-2xl overflow-hidden shadow-2xl">
 			<img class="w-full h-full object-cover object-center" src={photos[Math.floor(Math.random() * photos.length)]} alt="placeholder" />
         </a>
 	</div>
