@@ -34,9 +34,7 @@
 		</span>
 	</NavBrand>
 	<div class="flex">
-		{#if !data.user}
-			<Button href="/login"><FasRightToBracket class="mr-2 -ml-1" />Bejelentkezés</Button>
-		{:else}
+		{#if data.user}
 			<Button pill color="light" id="avatar" class="!p-1 sm:!pr-4 min-w-[50px]">
 				<Avatar
 					src="https://api.dicebear.com/5.x/initials/svg?seed={data.user.name}&scale=65"
@@ -48,7 +46,9 @@
 			</Button>
 			<Dropdown triggeredBy="#avatar" class="w-full py-1">
 				<div slot="header" class="px-4 py-2">
-					<span class="block text-sm text-gray-900 dark:text-white">{data.user.name} - {data.user.role.name}</span>
+					<span class="block text-sm text-gray-900 dark:text-white"
+						>{data.user.name} - {data.user.role.name}</span
+					>
 					<span class="block truncate text-xs opacity-75">{data.user.email}</span>
 				</div>
 				ide még kéne valami
