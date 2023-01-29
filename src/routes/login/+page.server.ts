@@ -1,10 +1,11 @@
-import { fail, redirect, error, type ServerLoad } from "@sveltejs/kit";
+import { fail, redirect, error } from "@sveltejs/kit";
+import type { PageServerLoad } from "./$types";
 import type { Actions } from "@sveltejs/kit";
 import z from "zod";
 import { matches } from "$lib/server/auth/hashing";
 import * as env from "$env/static/private"
 
-export const load: ServerLoad = async ({ locals }) => {
+export const load: PageServerLoad = async ({ locals }) => {
     if (locals.session) throw error(403);
 }
 
