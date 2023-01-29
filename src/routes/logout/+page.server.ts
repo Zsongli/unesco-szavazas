@@ -1,4 +1,4 @@
-import { error, type Actions } from '@sveltejs/kit';
+import { error, redirect, type Actions } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
 export const load = (async () => {
@@ -14,5 +14,7 @@ export const actions: Actions = {
 
         await locals.db.revokedToken.create({ data: { value: token } });
         cookies.delete("session_token");
+
+        throw redirect(303, "/");
     }
 }
