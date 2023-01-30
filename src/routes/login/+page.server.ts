@@ -14,10 +14,8 @@ const loginSchema = z.object({
     password: z.string({ required_error: "Jelszó megadása szükséges!", invalid_type_error: "Hibás jelszó formátum!" }).min(1, "Jelszó megadása szükséges!").min(8, "A jelszónak legalább 8 karakter hosszúnak kell lennie!")
 });
 
-const secure = env.ORIGIN.startsWith("https://");
-
 export const actions: Actions = {
-    async default({ request, cookies, locals }) {
+    async default({ request, cookies, locals, url }) {
         if (locals.session) throw error(403);
 
         const formData = Object.fromEntries(await request.formData());
@@ -46,7 +44,7 @@ export const actions: Actions = {
         if (!user || !matches(password, user.password)) return fail(400, { data, message: "Az e-mail cím és a jelszó nem egyezik!" });
 
         const { password: __, roleId, ...tokenData } = user;
-        cookies.set("session_token", locals.sessionIssuer.encode({ user: tokenData }, "7d"), { secure });
+        cookies.set("session_token", locals.sessionIssuer.encode({ user: tokenData }, "7d"), { secure: url.protocol === "https:" });
         throw redirect(303, "/");
     }
 }
