@@ -1,7 +1,8 @@
 <script lang="ts">
-	import { Span, Table, TableBody, TableBodyCell, TableBodyRow, TableHead } from "flowbite-svelte";
+	import { Popover, Span, Table, TableBody, TableBodyCell, TableBodyRow, TableHead } from "flowbite-svelte";
 	import type { PageData } from "./$types";
 	import FasSquarePollVertical from "~icons/fa6-solid/square-poll-vertical";
+	import FasAsterisk from "~icons/fa6-solid/asterisk";
 	import "$lib/styles/results.pcss";
 
 	export var data: PageData;
@@ -13,9 +14,15 @@
 
 <Table divClass="relative overflow-x-auto rounded-t-lg thin-scrollbar" class="w-full">
 	<TableHead>
-		<th class="px-3 py-6 flex flex-col items-center justify-center gap-2">
-			<FasSquarePollVertical class="text-lg" />
-			<Span class="text-center normal-case text-lg">Összesítés</Span>
+		<th class="px-3 py-6">
+			<div class="flex flex-col items-center justify-center gap-2">
+				<FasSquarePollVertical class="text-xl" />
+				<div class="flex">
+					<Span class="text-center normal-case text-base">Összesítés</Span>
+					<FasAsterisk id="summary-asterisk" class="text-[8px]"/>
+					<Popover class="font-normal normal-case text-xs" title="Figyelem!" placement="right">Az összesítésbe kizárólag a véglegesített szavazatok számítanak bele.</Popover>
+				</div>
+			</div>
 		</th>
 		{#each data.categories as category}
 			<th class="py-3 text-vertical rotate-[179.9deg] border-gray-800 border-l">{category}</th>
