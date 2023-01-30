@@ -17,6 +17,8 @@
 	import FlowbiteToaster from "$lib/components/flowbite-toast/Toaster.svelte";
 	import type { LayoutData } from "./$types";
 	import { enhance } from "$app/forms";
+	import { navigating } from "$app/stores";
+	import PageLoader from "$lib/components/PageLoader.svelte";
 
 	export var data: LayoutData;
 </script>
@@ -63,6 +65,10 @@
 		{/if}
 	</div>
 </Navbar>
+
+{#if $navigating}
+	<PageLoader message="Egy pillanat..." />
+{/if}
 
 <main class="grow">
 	<slot />
