@@ -7,31 +7,25 @@ export const load = (async ({ params, locals }) => {
     if (!locals.session.user.role.permissions.includes('view-results')) throw error(403);
 
     const judgeId = params.judgeId;
-    const judgeRecord = await locals.db.user.findUnique({ where: { id: judgeId } });
-    if (!judgeRecord) throw error(404);
+    const judgeRecord = await locals.db.user.findUnique({ where: { id: judgeId }, include: { role: { select: { permissions: true } } } });
+    if (!judgeRecord || !judgeRecord?.role.permissions.includes("vote")) throw error(404);
 
     const categoryRecords = await locals.db.orderCategory.findMany();
     const classRecords = await locals.db.class.findMany();
     const placementRecords = await locals.db.placement.findMany({ where: { userId: judgeId } });
-    const categories = categoryRecords.map(x => x.name);
     const categoryIds = categoryRecords.map(x => x.id);
     const classes = classRecords.map(x => ({ name: x.name, country: x.country }));
     const classIds = classRecords.map(x => x.id);
     const groupResults = groupByProps(placementRecords, ["categoryId", "classId"]);
     const finalizedSet = new Set((await locals.db.orderFinalized.findMany({ where: { userId: judgeId } })).map(x => x.categoryId));
     const tableData = classIds.map(cl =>
-        categoryIds.map(cat =>
-            finalizedSet.has(cat)
-                ? groupResults.get({ categoryId: cat, classId: cl }).at(0)?.placement
-                : undefined
-        )
+        categoryIds.map(cat => groupResults.get({ categoryId: cat, classId: cl }).at(0)?.placement)
     );
     return {
-        categories: categories,
+        categories: categoryRecords.map(x => ({ id: x.id, name: x.name, finalized: finalizedSet.has(x.id) })),
         classes: classes,
         tableData: tableData,
-        judgeName: judgeRecord.name
+        judgeName: judgeRecord.name,
+        canRevertFinalizations: locals.session.user.role.permissions.includes('revert-finalizations')
     };
-}) satisfies PageServerLoad
-
-
+}) satisfies PageServerLoad;

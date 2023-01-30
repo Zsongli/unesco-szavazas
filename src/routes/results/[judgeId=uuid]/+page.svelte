@@ -1,15 +1,22 @@
 <script lang="ts">
 	import {
 		Avatar,
+		Button,
+		Popover,
 		Span,
 		Table,
 		TableBody,
 		TableBodyCell,
 		TableBodyRow,
-		TableHead,
+		TableHead
 	} from "flowbite-svelte";
+	import FasEllipsis from "~icons/fa6-solid/ellipsis";
+	import FasCircleCheck from "~icons/fa6-solid/circle-check";
 	import type { PageData } from "./$types";
 	import "$lib/styles/results.pcss";
+	import { page } from "$app/stores";
+	import { invalidateAll } from "$app/navigation";
+	import toast from "svelte-french-toast";
 
 	export let data: PageData;
 
@@ -17,21 +24,73 @@
 	$: categories = data.categories;
 	$: classes = data.classes;
 	$: judgeName = data.judgeName;
+
+	var isReverting = false;
+	async function revert(id: number) {
+		isReverting = true;
+		const res = await fetch(`/ordering/${id}`, {
+			method: "DELETE",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({
+				judgeId: $page.params.judgeId
+			})
+		});
+
+		if (res.ok) {
+			await invalidateAll();
+			toast.success("A véglegesítés sikeresen visszaállítva.");
+		} else toast.error("Hiba történt a véglegesítés visszaállítása közben.");
+		isReverting = false;
+	}
 </script>
 
 <svelte:head>
 	<title>Eredmények • {judgeName} • UNESCO Szavazás</title>
 </svelte:head>
 
-<!-- TODO: show finalization status -->
 <Table divClass="relative overflow-x-auto rounded-t-lg thin-scrollbar" class="w-full">
 	<TableHead>
-		<th class="px-3 py-6 flex flex-col items-center justify-center gap-2">
-			<Avatar src="https://api.dicebear.com/5.x/initials/svg?seed={judgeName}&scale=85" border size="sm"></Avatar>
-			<Span class="text-center normal-case">{judgeName}</Span>
+		<th class="px-3 py-6">
+			<div class="flex flex-col items-center gap-2">
+				<Avatar
+					src="https://api.dicebear.com/5.x/initials/svg?seed={judgeName}&scale=85"
+					border
+					size="sm"
+				/>
+				<Span class="text-center normal-case">{judgeName}</Span>
+			</div>
 		</th>
-		{#each categories as category}
-			<th class="py-3 text-vertical rotate-[179.9deg] border-gray-800 border-l">{category}</th>
+		{#each categories as { id, name, finalized }}
+			<th class="py-3 border-gray-800 border-l text-vertical">
+				<div class="flex justify-end items-center gap-2">
+					<div class="rotate-[179.9deg]">
+						{name}
+					</div>
+					{#if finalized}
+						<FasCircleCheck id="finalization-indicator-{id}" class="text-green-500" />
+						{#if data.canRevertFinalizations}
+							<Popover
+								triggeredBy="#finalization-indicator-{id}"
+								title="Véglegesítve"
+								class="normal-case text-horizontal"
+								placement="bottom"
+							>
+								<Button color="red" size="xs" disabled={isReverting} on:click={() => revert(id)}>Visszaállítás</Button>
+							</Popover>
+						{:else}
+							<Popover
+								triggeredBy="#finalization-indicator-{id}"
+								class="normal-case text-horizontal"
+								placement="top"
+							>
+								Véglegesítve
+							</Popover>
+						{/if}
+					{/if}
+				</div>
+			</th>
 		{/each}
 	</TableHead>
 	<TableBody>
@@ -44,7 +103,15 @@
 					</div>
 				</TableBodyCell>
 				{#each tableData[i] as place}
-					<TableBodyCell class="border-gray-700 text-center">{place ?? ".."}.</TableBodyCell>
+					<TableBodyCell class="border-gray-700 text-center">
+						{#if place != null}
+							{place}.
+						{:else}
+							<div class="flex items-center justify-center">
+								<FasEllipsis />
+							</div>
+						{/if}
+					</TableBodyCell>
 				{/each}
 			</TableBodyRow>
 		{/each}
