@@ -10,7 +10,7 @@
 	$: currentCategoryIndex = data.categories.findIndex((c) => c.id === category);
 </script>
 
-<div class="min-w-min max-w-2xl mx-auto px-4 py-2 flex flex-col items-center gap-8 mt-4">
+<div class="min-w-min max-w-2xl mx-auto px-4 py-2 flex flex-col items-center gap-8 my-4">
 	<Heading tag="h2" class="text-center">Sorbarendezés</Heading>
 	<ul class="w-fit max-w-full m-auto hidden sm:flex items-center list-none overflow-x-auto">
 		{#each data.categories as { id, name } (id)}
