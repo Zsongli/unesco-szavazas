@@ -29,9 +29,9 @@ db.$connect()
             data: [
                 { name: "9.A", country: "Brazília" },
                 { name: "10.B", country: "Franciaország" },
-                { name: "10.C", country: "??" },
+                { name: "10.C", country: "Szerbia" },
                 { name: "10.D", country: "Malajzia" },
-                { name: "9.E", country: "??" },
+                { name: "9.E", country: "Marokkó" },
                 { name: "9.F", country: "Mongólia" }
             ]
         }
