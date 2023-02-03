@@ -41,9 +41,9 @@
 
 <div class="w-full max-w-md m-auto px-4 mt-8">
 	<div class="w-full flex flex-col items-center gap-4 bg-gray-800 p-6 rounded-2xl">
-		<Heading tag="h1" customSize="base" class="text-center text-3xl font-bold py-2"
-			>Regisztráció</Heading
-		>
+		<Heading tag="h1" customSize="base" class="text-center text-3xl font-bold py-2">
+			Regisztráció
+		</Heading>
 		<form method="post" use:enhance={submit} class="w-full flex flex-col gap-4">
 			<div class="flex flex-col">
 				<Label for="email" color={form?.errors?.email ? "red" : "gray"} class="mb-2">

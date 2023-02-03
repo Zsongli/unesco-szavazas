@@ -4,6 +4,7 @@
 	import FasTableList from "~icons/fa6-solid/table-list";
 	import FasSquarePollVertical from "~icons/fa6-solid/square-poll-vertical";
 	import FasRightToBracket from "~icons/fa6-solid/right-to-bracket";
+	import FasUserPlus from "~icons/fa6-solid/user-plus";
 
 	export var data: PageData;
 
@@ -55,6 +56,11 @@
 					{#if data.user.role.permissions.includes("view-results")}
 						<Button href="/results" class="gap-2 md:px-6 md:py-3.5 md:text-base">
 							<FasSquarePollVertical /> Eredmények
+						</Button>
+					{/if}
+					{#if data.user.role.permissions.includes("register")}
+						<Button href="/register" class="gap-2 md:px-6 md:py-3.5 md:text-base">
+							<FasUserPlus /> Profil létrehozása
 						</Button>
 					{/if}
 				</div>
