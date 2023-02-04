@@ -119,7 +119,7 @@
 					i
 						? '!bg-opacity-50 outline-1'
 						: 'border-opacity-100 bg-opacity-100 outline-0'}"
-					style={draggedIndex === i ? `translate: 0 ${offset}px;` : ""}
+					style={draggedIndex === i ? ` transform: translateY(${offset}px);` : ""}
 					bind:this={rows[i]}
 				>
 					{#if $$slots["index-col"]}
