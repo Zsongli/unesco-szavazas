@@ -44,18 +44,18 @@
 		{#each data.categories as category}
 			<th class="py-3 border-gray-800 border-l">
 				<div class="flex justify-center">
-					<div class="text-vertical rotate-[179.9deg] ">{category}</div>
+					<div class="text-vertical rotate-180 ">{category}</div>
 				</div>
 			</th>
 		{/each}
 		<th class="py-3 border-gray-800 border-l-2">
 			<div class="flex justify-center">
-				<div class="text-vertical rotate-[179.9deg] ">Összesen</div>
+				<div class="text-vertical rotate-180 ">Összesen</div>
 			</div>
 		</th>
 		<th class="py-3 border-gray-800 border-l">
 			<div class="flex justify-center">
-				<div class="text-vertical rotate-[179.9deg] ">Helyezés</div>
+				<div class="text-vertical rotate-180 ">Helyezés</div>
 			</div>
 		</th>
 	</TableHead>

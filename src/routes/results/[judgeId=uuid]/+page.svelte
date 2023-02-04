@@ -66,8 +66,8 @@
 		{#each categories as { id, name, finalized }}
 			<th class="py-3 border-gray-800 border-l">
 				<div class="flex justify-center">
-					<div class="items-center">
-						<div class="text-vertical rotate-[179.9deg]">
+					<div class="flex items-center">
+						<div class="text-vertical rotate-180">
 							{name}
 						</div>
 						{#if finalized}
@@ -80,9 +80,9 @@
 									class="normal-case text-horizontal"
 									placement="bottom"
 								>
-									<Button color="red" size="xs" disabled={isReverting} on:click={() => revert(id)}
-										>Visszaállítás</Button
-									>
+									<Button color="red" size="xs" disabled={isReverting} on:click={() => revert(id)}>
+										Visszaállítás
+									</Button>
 								</Popover>
 							{:else}
 								<Popover
