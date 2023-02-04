@@ -23,17 +23,19 @@
 </script>
 
 <svelte:head>
-    <title>Jelszóváltoztatás • UNESCO Szavazás</title>
+	<title>Jelszóváltoztatás • UNESCO Szavazás</title>
 </svelte:head>
 
 <div class="w-full max-w-sm m-auto px-4 mt-8">
 	<div class="w-full flex flex-col items-center gap-4 bg-gray-800 p-6 rounded-2xl">
-		<Heading tag="h1" customSize="base" class="text-center text-3xl font-bold py-2"
-			>Jelszóváltoztatás</Heading
-		>
+		<Heading tag="h1" customSize="base" class="text-center text-3xl font-bold py-2">
+			Jelszóváltoztatás
+		</Heading>
 		<form method="post" use:enhance={submit} class="w-full flex flex-col gap-4">
 			<div class="flex flex-col">
-				<Label for="oldPassword" class="mb-2" color={form?.errors?.oldPassword ? "red" : "gray"}>Jelenlegi jelszó</Label>
+				<Label for="oldPassword" class="mb-2" color={form?.errors?.oldPassword ? "red" : "gray"}>
+					Jelenlegi jelszó
+				</Label>
 				<ButtonGroup>
 					<InputAddon><FasKey /></InputAddon>
 					<Input
@@ -56,12 +58,14 @@
 						</button>
 					</InputAddon>
 				</ButtonGroup>
-                {#if form?.errors?.oldPassword}
+				{#if form?.errors?.oldPassword}
 					<Helper class="mt-2" color="red">{form.errors.oldPassword[0]}</Helper>
 				{/if}
 			</div>
-            <div class="flex flex-col">
-				<Label for="newPassword" class="mb-2" color={form?.errors?.newPassword ? "red" : "gray"}>Új jelszó</Label>
+			<div class="flex flex-col">
+				<Label for="newPassword" class="mb-2" color={form?.errors?.newPassword ? "red" : "gray"}>
+					Új jelszó
+				</Label>
 				<ButtonGroup>
 					<InputAddon><FasKey /></InputAddon>
 					<Input
@@ -84,7 +88,7 @@
 						</button>
 					</InputAddon>
 				</ButtonGroup>
-                {#if form?.errors?.newPassword}
+				{#if form?.errors?.newPassword}
 					<Helper class="mt-2" color="red">{form.errors.newPassword[0]}</Helper>
 				{/if}
 			</div>

@@ -56,8 +56,7 @@
 				ordering: order.map((x) => x.id)
 			})
 		});
-		let data = await res.json();
-		console.log(data);
+		await res.json();
 	}
 
 	var isWatingForFinalizeSubmitting = false;
@@ -99,9 +98,9 @@
 	</div>
 </OrderableList>
 
-<Popover triggeredBy="#btn-finalize" placement="left" class="text-xs"
-	>Szavazat véglegesítése</Popover
->
+<Popover triggeredBy="#btn-finalize" placement="left" class="text-xs">
+	Szavazat véglegesítése
+</Popover>
 
 {#if finalized}
 	<div
@@ -120,8 +119,9 @@
 			placement="left"
 			class="text-xs max-w-xs"
 			title="Véletlen volt?"
-			>A visszavonáshoz keresd meg valamelyik adminisztrátort!</Popover
 		>
+			A visszavonáshoz keresd meg valamelyik adminisztrátort!
+		</Popover>
 	</div>
 {/if}
 
@@ -165,10 +165,3 @@
 		</Modal>
 	</div>
 {/if}
-
-<!-- {#if isWaiting}
-	<div class="flex flex-col items-center gap-1 p-1">
-		<div>Mentés...</div>
-		<Spinner color="gray" size="4" />
-	</div>
-{/if} -->

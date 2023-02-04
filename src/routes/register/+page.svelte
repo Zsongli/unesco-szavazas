@@ -124,7 +124,7 @@
 					<Helper class="mt-2" color="red">{form.errors.password[0]}</Helper>
 				{/if}
 			</div>
-			<Button type="submit" class="mt-2">Küldés</Button>
+			<Button type="submit" class="mt-2">Létrehozás</Button>
 		</form>
 	</div>
 </div>
