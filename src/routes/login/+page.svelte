@@ -93,7 +93,7 @@
 			<Button type="submit" class="mt-2">Küldés</Button>
 		</form>
 		<P size="xs" class="place-self-start opacity-50">
-			Regisztrációhoz keresd meg valamelyik adminisztrátort.</P
-		>
+			Regisztrációhoz keresd meg valamelyik adminisztrátort.
+		</P>
 	</div>
 </div>
