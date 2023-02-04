@@ -1,7 +1,7 @@
 export function groupByProps<T extends Record<string, string | number>, K extends (keyof T)[]>(arr: T[], props: K) {
     let map = new Map<string, T[]>();
     arr.forEach(o => {
-        var group = hashFromProps(o, props);
+        let group = hashFromProps(o, props);
         if (!map.has(group)) map.set(group, []);
         map.get(group)?.push(o);
     });
