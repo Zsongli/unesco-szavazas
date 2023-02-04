@@ -17,15 +17,13 @@
 
 {#if show && $navigating != null}
 	<div
-		class="fixed w-screen h-screen bg-gray-900 z-50"
+		class="fixed w-screen h-screen bg-gray-900 z-50 grid place-items-center"
 		in:fade={{ duration: fadeInDuration }}
 		out:fade={{ duration: fadeOutDuration }}
 	>
-		<div
-			class="flex items-center justify-center gap-5 text-center w-1/2 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-		>
-			<Spinner color="blue" size="8" />
-			<Heading tag="h3" class="w-fit -translate-y-[3px]">{message}</Heading>
+		<div class="flex items-center gap-5 h-20 px-2">
+			<div class="flex-shrink-0"><Spinner color="blue" size="8" /></div>
+			<Heading tag="h3" class="w-fit -translate-y-[0.2rem]">{message}</Heading>
 		</div>
 	</div>
 {/if}
