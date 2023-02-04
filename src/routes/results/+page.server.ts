@@ -25,7 +25,7 @@ export const load = (async ({ locals }) => {
     );
     const classScores = tableData.map((x, i) => ({ classId: classIds[i], score: x.reduce((a, b) => a + b, 0) }));
     const sortedScores = [...classScores].sort((a, b) => a.score - b.score);
-    const placements = classScores.map((x) => sortedScores.findIndex(y => y.classId === x.classId) + 1);
+    const placements = classScores.map((x) => sortedScores.findIndex(y => y.score === x.score) + 1);
 
 
 
