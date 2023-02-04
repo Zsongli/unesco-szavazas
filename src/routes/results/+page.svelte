@@ -34,7 +34,7 @@
 				<FasSquarePollVertical class="text-xl" />
 				<div class="flex">
 					<Span class="text-center normal-case text-base">Összesítés</Span>
-					<FasAsterisk id="summary-asterisk" class="text-[8px]" />
+					<FasAsterisk id="summary-asterisk" class="text-[0.5rem]" />
 					<Popover class="font-normal normal-case text-xs" title="Figyelem!" placement="right">
 						Az összesítésbe kizárólag a véglegesített szavazatok számítanak bele.
 					</Popover>
