@@ -13,6 +13,7 @@
 	import FasEllipsis from "~icons/fa6-solid/ellipsis";
 	import FasCircleCheck from "~icons/fa6-solid/circle-check";
 	import FasEyeSlash from "~icons/fa6-solid/eye-slash";
+	import FasRotate from "~icons/fa6-solid/rotate";
 	import type { PageData } from "./$types";
 	import "$lib/styles/results.pcss";
 	import { page } from "$app/stores";
@@ -66,12 +67,11 @@
 		{#each categories as { id, name, finalized }}
 			<th class="py-3 border-gray-800 border-l">
 				<div class="flex justify-center">
-					<div class="flex items-center">
-						<div class="text-vertical rotate-180">
+					<div class="flex items-center flex-col gap-2">
+						<div class="text-vertical rotate-[179.9deg]">
 							{name}
 						</div>
 						{#if finalized}
-							<div class="h-2" />
 							<FasCircleCheck id="finalization-indicator-{id}" class="text-green-500" />
 							{#if data.canRevertFinalizations}
 								<Popover
@@ -80,8 +80,14 @@
 									class="normal-case text-horizontal"
 									placement="bottom"
 								>
-									<Button color="red" size="xs" disabled={isReverting} on:click={() => revert(id)}>
-										Visszaállítás
+									<Button
+										color="red"
+										size="xs"
+										class="gap-2"
+										disabled={isReverting}
+										on:click={() => revert(id)}
+									>
+										<FasRotate /> Visszaállítás
 									</Button>
 								</Popover>
 							{:else}
