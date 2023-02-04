@@ -14,6 +14,7 @@ db.$connect()
                 { name: "Admin", permissions: ["register", "view-results", "revert-finalizations"] },
                 { name: "Zsűri", permissions: ["vote"] },
                 { name: "DÖK", permissions: ["view-results"] },
+                { name: "DÖMST", permissions: ["view-results", "revert-finalizations"] },
             ]
         },
         orderCategory: {
