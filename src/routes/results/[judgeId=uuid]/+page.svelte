@@ -64,34 +64,37 @@
 			</div>
 		</th>
 		{#each categories as { id, name, finalized }}
-			<th class="py-3 border-gray-800 border-l text-vertical">
-				<div class="flex justify-end items-center gap-2">
-					<div class="rotate-[179.9deg]">
-						{name}
-					</div>
-					{#if finalized}
-						<FasCircleCheck id="finalization-indicator-{id}" class="text-green-500" />
-						{#if data.canRevertFinalizations}
-							<Popover
-								triggeredBy="#finalization-indicator-{id}"
-								title="Véglegesítve"
-								class="normal-case text-horizontal"
-								placement="bottom"
-							>
-								<Button color="red" size="xs" disabled={isReverting} on:click={() => revert(id)}
-									>Visszaállítás</Button
+			<th class="py-3 border-gray-800 border-l">
+				<div class="flex justify-center">
+					<div class="items-center">
+						<div class="text-vertical rotate-[179.9deg]">
+							{name}
+						</div>
+						{#if finalized}
+							<div class="h-2" />
+							<FasCircleCheck id="finalization-indicator-{id}" class="text-green-500" />
+							{#if data.canRevertFinalizations}
+								<Popover
+									triggeredBy="#finalization-indicator-{id}"
+									title="Véglegesítve"
+									class="normal-case text-horizontal"
+									placement="bottom"
 								>
-							</Popover>
-						{:else}
-							<Popover
-								triggeredBy="#finalization-indicator-{id}"
-								class="normal-case text-horizontal"
-								placement="top"
-							>
-								Véglegesítve
-							</Popover>
+									<Button color="red" size="xs" disabled={isReverting} on:click={() => revert(id)}
+										>Visszaállítás</Button
+									>
+								</Popover>
+							{:else}
+								<Popover
+									triggeredBy="#finalization-indicator-{id}"
+									class="normal-case text-horizontal"
+									placement="top"
+								>
+									Véglegesítve
+								</Popover>
+							{/if}
 						{/if}
-					{/if}
+					</div>
 				</div>
 			</th>
 		{/each}
