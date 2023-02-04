@@ -1,5 +1,8 @@
 FROM node:18-alpine as builder
 
+# For some reason building uses the db url, so set it to a valid dummy value
+ENV DATABASE_URL="postgresql://"
+
 RUN npm install -g pnpm
 
 WORKDIR /app
