@@ -11,10 +11,10 @@ db.$connect()
     .then(async () => await initDb(db as Omit<typeof db, `$${string}`>, {
         role: {
             data: [
-                { name: "Admin", permissions: ["register", "view-results", "revert-finalizations"] },
-                { name: "Zsűri", permissions: ["vote"] },
+                { name: "Admin", permissions: ["register", "view-results", "view-user-votes", "revert-finalizations"] },
+                { name: "DÖMST", permissions: ["view-results", "view-user-votes", "revert-finalizations"] },
                 { name: "DÖK", permissions: ["view-results"] },
-                { name: "DÖMST", permissions: ["view-results", "revert-finalizations"] },
+                { name: "Zsűri", permissions: ["vote"] },
             ]
         },
         orderCategory: {

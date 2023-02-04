@@ -12,6 +12,7 @@
 	} from "flowbite-svelte";
 	import FasEllipsis from "~icons/fa6-solid/ellipsis";
 	import FasCircleCheck from "~icons/fa6-solid/circle-check";
+	import FasEyeSlash from "~icons/fa6-solid/eye-slash";
 	import type { PageData } from "./$types";
 	import "$lib/styles/results.pcss";
 	import { page } from "$app/stores";
@@ -77,7 +78,9 @@
 								class="normal-case text-horizontal"
 								placement="bottom"
 							>
-								<Button color="red" size="xs" disabled={isReverting} on:click={() => revert(id)}>Visszaállítás</Button>
+								<Button color="red" size="xs" disabled={isReverting} on:click={() => revert(id)}
+									>Visszaállítás</Button
+								>
 							</Popover>
 						{:else}
 							<Popover
@@ -104,12 +107,16 @@
 				</TableBodyCell>
 				{#each tableData[i] as place}
 					<TableBodyCell class="border-gray-700 text-center">
-						{#if place != null}
-							{place}.
-						{:else}
+						{#if place === undefined}
 							<div class="flex items-center justify-center">
 								<FasEllipsis />
 							</div>
+						{:else if place === "hidden"}
+							<div class="flex items-center justify-center">
+								<FasEyeSlash />
+							</div>
+						{:else}
+							{place}.
 						{/if}
 					</TableBodyCell>
 				{/each}
