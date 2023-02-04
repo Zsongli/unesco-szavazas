@@ -1,6 +1,6 @@
 import type { Handle } from "@sveltejs/kit";
 import { sequence } from "@sveltejs/kit/hooks";
-import * as env from "$env/static/private";
+import { env } from "$env/dynamic/private";
 import SessionIssuer from "$lib/server/auth/session-issuer";
 import { PrismaClient } from "@prisma/client";
 import initDb from "$lib/server/init-db";
