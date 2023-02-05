@@ -24,11 +24,16 @@
 </svelte:head>
 
 <div class="m-auto max-w-7xl flex flex-col items-center gap-2 mt-8 landscape:mt-16 px-8">
-	<div class="grid grid-rows-2 xl:grid-cols-[3fr,2fr] min-h-fit gap-14">
+	<div class="grid xl:grid-cols-[3fr,2fr] min-h-fit gap-14">
 		<div class="flex flex-col gap-6 xl:items-stretch items-center text-center xl:text-left">
 			<Heading tag="h2" class="!text-3xl sm:!text-4xl md:!text-5xl lg:!text-6xl">
 				Üdvözöllek az UNESCO műsorok
-				<Span class="!text-blue-600 font-bold">szavazóalkalmazásában!</Span>
+				<Span
+					class="font-bold"
+					gradient
+					gradientClass="text-transparent bg-clip-text bg-gradient-to-r from-teal-500 to-blue-700"
+					>szavazóalkalmazásában!</Span
+				>
 			</Heading>
 			<p class="text-sm sm:text-base md:text-lg lg:text-xl text-gray-400">
 				Itt szavazhatnak a zsűritagok a kedvenc UNESCO műsoraikra, az alkalmazás pedig összesíti a
@@ -43,22 +48,24 @@
 				</Button>
 			{:else}
 				<p class="text-sm sm:text-base md:text-lg lg:text-xl text-gray-400">
-					A kezdéshez kérlek válassz az alábbi lehetőségek közül:
+					A következő lehetőségek állnak rendelkezésedre:
 				</p>
+				
+				{@const perms = data.user.role.permissions}
 				<div
 					class="flex flex-col justify-center gap-4 bg-gray-700 p-4 rounded-md self-stretch md:self-center sm:flex-row xl:self-stretch md:w-fit md:justify-start"
 				>
-					{#if data.user.role.permissions.includes("vote")}
+					{#if perms.includes("vote")}
 						<Button href="/ordering" class="gap-2 md:px-6 md:py-3.5 md:text-base">
 							<FasTableList /> Szavazás
 						</Button>
 					{/if}
-					{#if data.user.role.permissions.includes("view-results")}
+					{#if perms.includes("view-results")}
 						<Button href="/results" class="gap-2 md:px-6 md:py-3.5 md:text-base">
 							<FasSquarePollVertical /> Eredmények
 						</Button>
 					{/if}
-					{#if data.user.role.permissions.includes("register")}
+					{#if perms.includes("register")}
 						<Button href="/register" class="gap-2 md:px-6 md:py-3.5 md:text-base">
 							<FasUserPlus /> Profil létrehozása
 						</Button>
@@ -75,7 +82,7 @@
 			<img
 				class="w-full h-full object-cover object-center"
 				src={photos[Math.floor(Math.random() * photos.length)]}
-				alt="placeholder"
+				alt="UNESCO Műsor 2022"
 			/>
 		</a>
 	</div>
