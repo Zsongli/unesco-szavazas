@@ -3,9 +3,13 @@ import { assertVoterSession } from "$lib/server/ordering";
 
 export const load: LayoutServerLoad = async ({ locals }) => {
     assertVoterSession(locals.session);
-    const categories = locals.db.orderCategory.findMany({ select: { id: true, name: true } });
+
+    const [categories, finalized] = await Promise.all([
+        locals.db.orderCategory.findMany({ select: { id: true, name: true } }),
+        locals.db.orderFinalized.findMany({ select: { categoryId: true, userId: true } })
+    ])
 
     return {
-        categories: categories
+        categories: categories.map(c => ({ id: c.id, name: c.name, finalized: finalized.some(f => f.categoryId === c.id && f.userId === locals.session!.user.id) }))
     };
 };

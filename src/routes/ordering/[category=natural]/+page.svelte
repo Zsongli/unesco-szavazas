@@ -13,10 +13,11 @@
 	import CustomBronzeMedal from "~icons/custom/bronze-medal";
 	import toast from "svelte-french-toast";
 	import { browser } from "$app/environment";
+	import { invalidateAll } from "$app/navigation";
 
 	export let data: PageData;
 
-	$: categoryId = $page.params.category;
+	$: categoryId = Number($page.params.category);
 	$: categoryName = data.categoryName;
 	$: order = data.order;
 	$: finalized = data.finalized;
@@ -45,10 +46,10 @@
 	async function finalize() {
 		isWatingForFinalizeSubmitting = true;
 		await postOrdering(true);
+		await invalidateAll(); // need this so the layout updates as well
 		toast.success("A kategória véglegesítése sikeresen megtörtént.");
 		isWatingForFinalizeSubmitting = false;
 		finalizeConfirmationOpen = false;
-		finalized = true;
 	}
 	async function postOrdering(finalize: boolean) {
 		let res = await fetch(`/ordering/${categoryId}`, {
