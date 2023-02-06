@@ -4,7 +4,11 @@ module.exports = {
         "./node_modules/flowbite-svelte/**/*.{html,js,svelte,ts}"
     ],
     theme: {
-        extend: {}
+        extend: {
+            fontFamily: {
+                sans: ["Open Sans", "sans-serif"]
+            }
+        }
     },
     plugins: [
         require("flowbite/plugin")
