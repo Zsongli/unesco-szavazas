@@ -15,6 +15,7 @@ db.$connect()
                 { name: "DÖMST", permissions: ["view-results", "view-user-votes", "revert-finalizations"] },
                 { name: "DÖK", permissions: ["view-results"] },
                 { name: "Zsűri", permissions: ["vote"] },
+                { name: "DÖK+Zsűri", permissions: ["vote", "view-results"] },
             ]
         },
         orderCategory: {
