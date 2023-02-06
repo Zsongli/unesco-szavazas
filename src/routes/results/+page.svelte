@@ -14,7 +14,7 @@
 	import CustomGoldMedal from "~icons/custom/gold-medal";
 	import CustomSilverMedal from "~icons/custom/silver-medal";
 	import CustomBronzeMedal from "~icons/custom/bronze-medal";
-	import "$lib/styles/results.pcss";
+	import "$lib/styles/tables.pcss";
 
 	export var data: PageData;
 </script>

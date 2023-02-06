@@ -15,7 +15,7 @@
 	import FasEyeSlash from "~icons/fa6-solid/eye-slash";
 	import FasRotate from "~icons/fa6-solid/rotate";
 	import type { PageData } from "./$types";
-	import "$lib/styles/results.pcss";
+	import "$lib/styles/tables.pcss";
 	import { page } from "$app/stores";
 	import { invalidateAll } from "$app/navigation";
 	import toast from "svelte-french-toast";

@@ -5,7 +5,7 @@ import { hash } from "$lib/server/auth/hashing";
 
 export const load: PageServerLoad = async ({ locals }) => {
     if (!locals.session) throw error(401);
-    if (!locals.session.user.role.permissions.includes("register")) throw error(403);
+    if (!locals.session.user.role.permissions.includes("manage-users")) throw error(403);
 
     return {
         roles: (await locals.db.role.findMany()).map(role => ({ value: role.id.toString(), name: role.name }))
@@ -22,7 +22,7 @@ const registrationSchema = z.object({
 export const actions: Actions = {
     async default({ request, locals }) {
         if (!locals.session) throw error(401);
-        if (!locals.session.user.role.permissions.includes("register")) throw error(403);
+        if (!locals.session.user.role.permissions.includes("manage-users")) throw error(403);
 
         const formData = Object.fromEntries(await request.formData());
         const { password: _, ...data } = formData;

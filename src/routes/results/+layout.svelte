@@ -3,7 +3,7 @@
 	import FasSquarePollVertical from "~icons/fa6-solid/square-poll-vertical";
 	import type { LayoutData } from "./$types";
 	import { page } from "$app/stores";
-	import "$lib/styles/results.pcss";
+	import "$lib/styles/tables.pcss";
 
 	export var data: LayoutData;
 </script>
