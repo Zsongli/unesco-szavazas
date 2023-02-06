@@ -92,7 +92,7 @@
 					<Helper class="mt-2" color="red">{form.errors.newPassword[0]}</Helper>
 				{/if}
 			</div>
-			<Button type="submit" class="mt-2">Küldés</Button>
+			<Button type="submit" class="mt-2">Frissítés</Button>
 		</form>
 	</div>
 </div>
