@@ -117,7 +117,7 @@
 					}}
 					class="transition-opacity border-b last:border-b-0 bg-white dark:border-gray-700 dark:bg-gray-800 dark:outline-gray-700 outline {draggedIndex ===
 					i
-						? '!bg-opacity-50 outline-1'
+						? '!bg-opacity-50 outline-1 z-10'
 						: 'border-opacity-100 bg-opacity-100 outline-0'}"
 					style={draggedIndex === i ? ` transform: translateY(${offset}px);` : ""}
 					bind:this={rows[i]}
