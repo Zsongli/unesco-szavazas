@@ -11,16 +11,12 @@
 	import type { PageData } from "./$types";
 	import FasSquarePollVertical from "~icons/fa6-solid/square-poll-vertical";
 	import FasAsterisk from "~icons/fa6-solid/asterisk";
+	import CustomGoldMedal from "~icons/custom/gold-medal";
+	import CustomSilverMedal from "~icons/custom/silver-medal";
+	import CustomBronzeMedal from "~icons/custom/bronze-medal";
 	import "$lib/styles/results.pcss";
 
 	export var data: PageData;
-
-	function placementToString(place: number) {
-		if (place === 1) return "🥇";
-		if (place === 2) return "🥈";
-		if (place === 3) return "🥉";
-		return `${place}.`;
-	}
 </script>
 
 <svelte:head>
@@ -34,7 +30,7 @@
 				<FasSquarePollVertical class="text-xl" />
 				<div class="flex">
 					<Span class="text-center normal-case text-base">Összesítés</Span>
-					<FasAsterisk id="summary-asterisk" class="text-[0.5rem]" />
+					<FasAsterisk id="summary-asterisk" class="text-[0.4rem]" />
 					<Popover class="font-normal normal-case text-xs" title="Figyelem!" placement="right">
 						Az összesítésbe kizárólag a véglegesített szavazatok számítanak bele.
 					</Popover>
@@ -42,20 +38,20 @@
 			</div>
 		</th>
 		{#each data.categories as category}
-			<th class="py-3 border-gray-800 border-l">
-				<div class="flex justify-center">
-					<div class="text-vertical rotate-[179.9deg] ">{category}</div>
+			<th class="py-3 border-gray-800 border-l text-vertical">
+				<div class="flex justify-end items-center gap-2">
+					<div class="rotate-[179.9deg] ">{category}</div>
 				</div>
 			</th>
 		{/each}
-		<th class="py-3 border-gray-800 border-l-2">
-			<div class="flex justify-center">
-				<div class="text-vertical rotate-[179.9deg] ">Összesen</div>
+		<th class="py-3 border-gray-800 border-l text-vertical">
+			<div class="flex justify-end items-center gap-2">
+				<div class="rotate-[179.9deg] ">Összesen</div>
 			</div>
 		</th>
-		<th class="py-3 border-gray-800 border-l">
-			<div class="flex justify-center">
-				<div class="text-vertical rotate-[179.9deg] ">Helyezés</div>
+		<th class="py-3 border-gray-800 border-l text-vertical">
+			<div class="flex justify-end items-center gap-2">
+				<div class="rotate-[179.9deg] ">Helyezés</div>
 			</div>
 		</th>
 	</TableHead>
@@ -74,11 +70,16 @@
 				<TableBodyCell class="border-gray-700 !border-l-2 text-center">
 					{data.scores[i]}
 				</TableBodyCell>
-				<TableBodyCell class="border-gray-700 text-center">
-					{#if data.placements[i] <= 3}
-						<Span class="text-xl">{placementToString(data.placements[i])}</Span>
+				<TableBodyCell class="border-gray-700 text-center !px-4">
+					{@const placement = data.placements[i]}
+					{#if placement === 1}
+						<CustomGoldMedal class="text-3xl" />
+					{:else if placement === 2}
+						<CustomSilverMedal class="text-3xl" />
+					{:else if placement === 3}
+						<CustomBronzeMedal class="text-3xl"/>
 					{:else}
-						<Span class="!text-gray-500">{placementToString(data.placements[i])}</Span>
+						<Span class="!text-gray-500">{placement}.</Span>
 					{/if}
 				</TableBodyCell>
 			</TableBodyRow>

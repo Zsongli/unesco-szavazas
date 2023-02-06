@@ -8,7 +8,9 @@
 	import FasCircleExclamation from "~icons/fa6-solid/circle-exclamation";
 	import FasCircleQuestion from "~icons/fa6-solid/circle-question";
 	import FasCircleCheck from "~icons/fa6-solid/circle-check";
-	import FasMedal from "~icons/fa6-solid/medal";
+	import CustomGoldMedal from "~icons/custom/gold-medal";
+	import CustomSilverMedal from "~icons/custom/silver-medal";
+	import CustomBronzeMedal from "~icons/custom/bronze-medal";
 	import toast from "svelte-french-toast";
 	import { browser } from "$app/environment";
 
@@ -85,13 +87,13 @@
 		</Button>
 	</svelte:fragment>
 	<div class="text-center" slot="index-col-header">Helyezés</div>
-	<div class="flex items-center justify-center text-center" slot="index-col" let:index>
+	<div class="flex items-center justify-center text-center max-h-0" slot="index-col" let:index>
 		{#if index === 0}
-			<FasMedal class="text-yellow-300" />
+			<CustomGoldMedal class="text-3xl" />
 		{:else if index === 1}
-			<FasMedal class="text-zinc-400" />
+			<CustomSilverMedal class="text-3xl" />
 		{:else if index === 2}
-			<FasMedal class="text-amber-800" />
+			<CustomBronzeMedal class="text-3xl" />
 		{:else}
 			<span class="text-gray-500">{index + 1}.</span>
 		{/if}
@@ -120,7 +122,7 @@
 			class="text-xs max-w-xs"
 			title="Véletlen volt?"
 		>
-			A visszavonáshoz keresd meg valamelyik adminisztrátort!
+			A visszavonáshoz keress meg egy adminisztrátort!
 		</Popover>
 	</div>
 {/if}
