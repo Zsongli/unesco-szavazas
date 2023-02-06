@@ -116,7 +116,7 @@
 				</TableBodyCell>
 				{#each tableData[i] as place}
 					<TableBodyCell class="border-gray-700 text-center">
-						{#if place === undefined}
+						{#if !place}
 							<div class="flex items-center justify-center">
 								<FasEllipsis />
 							</div>
