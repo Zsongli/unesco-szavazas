@@ -65,41 +65,41 @@
 			</div>
 		</th>
 		{#each categories as { id, name, finalized }}
-			<th class="py-3 border-gray-800 border-l">
-				<div class="flex justify-center">
-					<div class="flex items-center flex-col gap-2">
-						<div class="text-vertical rotate-[179.9deg]">
-							{name}
-						</div>
-						{#if finalized}
-							<FasCircleCheck id="finalization-indicator-{id}" class="text-green-500" />
-							{#if data.canRevertFinalizations}
-								<Popover
-									triggeredBy="#finalization-indicator-{id}"
-									title="Véglegesítve"
-									class="normal-case text-horizontal"
-									placement="bottom"
+			<th class="py-3 border-gray-800 border-l text-vertical">
+				<div class="flex items-center justify-between gap-2">
+					{#if finalized}
+						<FasCircleCheck id="finalization-indicator-{id}" class="text-green-500" />
+						{#if data.canRevertFinalizations}
+							<Popover
+								triggeredBy="#finalization-indicator-{id}"
+								title="Véglegesítve"
+								class="normal-case text-horizontal !border-gray-800"
+								placement="bottom"
+							>
+								<Button
+									color="red"
+									size="xs"
+									class="gap-2"
+									disabled={isReverting}
+									on:click={() => revert(id)}
 								>
-									<Button
-										color="red"
-										size="xs"
-										class="gap-2"
-										disabled={isReverting}
-										on:click={() => revert(id)}
-									>
-										<FasRotate /> Visszaállítás
-									</Button>
-								</Popover>
-							{:else}
-								<Popover
-									triggeredBy="#finalization-indicator-{id}"
-									class="normal-case text-horizontal"
-									placement="top"
-								>
-									Véglegesítve
-								</Popover>
-							{/if}
+									<FasRotate /> Visszaállítás
+								</Button>
+							</Popover>
+						{:else}
+							<Popover
+								triggeredBy="#finalization-indicator-{id}"
+								class="normal-case text-horizontal font-normal"
+								placement="bottom"
+							>
+								Véglegesítve
+							</Popover>
 						{/if}
+					{:else}
+							<div/>
+					{/if}
+					<div class="rotate-[179.9deg]">
+						{name}
 					</div>
 				</div>
 			</th>
