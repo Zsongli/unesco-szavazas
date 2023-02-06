@@ -38,20 +38,20 @@
 			</div>
 		</th>
 		{#each data.categories as category}
-			<th class="py-3 border-gray-800 border-l text-vertical">
-				<div class="flex justify-end items-center gap-2">
-					<div class="rotate-[179.9deg] ">{category}</div>
+			<th class="py-3 border-gray-800 border-l align-bottom">
+				<div class="flex justify-center">
+					<div class="text-vertical rotate-[179.9deg] ">{category}</div>
 				</div>
 			</th>
 		{/each}
-		<th class="py-3 border-gray-800 border-l text-vertical">
-			<div class="flex justify-end items-center gap-2">
-				<div class="rotate-[179.9deg] ">Összesen</div>
+		<th class="py-3 border-gray-800 border-l align-bottom">
+			<div class="flex justify-center">
+				<div class="text-vertical rotate-[179.9deg] ">Összesen</div>
 			</div>
 		</th>
-		<th class="py-3 border-gray-800 border-l text-vertical">
-			<div class="flex justify-end items-center gap-2">
-				<div class="rotate-[179.9deg] ">Helyezés</div>
+		<th class="py-3 border-gray-800 border-l align-bottom">
+			<div class="flex justify-center">
+				<div class="text-vertical rotate-[179.9deg] ">Helyezés</div>
 			</div>
 		</th>
 	</TableHead>
