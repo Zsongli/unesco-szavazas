@@ -52,7 +52,7 @@
 	<title>Eredmények • {judgeName} • UNESCO Szavazás</title>
 </svelte:head>
 
-<Table divClass="relative overflow-x-auto rounded-t-lg thin-scrollbar" class="w-full">
+<Table divClass="relative overflow-x-auto rounded-t-lg thin-scrollbar" class="w-full h-0">
 	<TableHead>
 		<th class="px-3 py-6">
 			<div class="flex flex-col items-center gap-2">
@@ -65,15 +65,15 @@
 			</div>
 		</th>
 		{#each categories as { id, name, finalized }}
-			<th class="py-3 border-gray-800 border-l text-vertical">
-				<div class="flex items-center justify-between gap-2">
+			<th class="py-3 border-gray-800 border-l h-full">
+				<div class="flex flex-col items-center justify-between gap-2 h-full">
 					{#if finalized}
 						<FasCircleCheck id="finalization-indicator-{id}" class="text-green-500" />
 						{#if data.canRevertFinalizations}
 							<Popover
 								triggeredBy="#finalization-indicator-{id}"
 								title="Véglegesítve"
-								class="normal-case text-horizontal !border-gray-800"
+								class="normal-case !border-gray-800"
 								placement="bottom"
 							>
 								<Button
@@ -89,7 +89,7 @@
 						{:else}
 							<Popover
 								triggeredBy="#finalization-indicator-{id}"
-								class="normal-case text-horizontal font-normal"
+								class="normal-case font-normal"
 								placement="bottom"
 							>
 								Véglegesítve
@@ -98,7 +98,7 @@
 					{:else}
 							<div/>
 					{/if}
-					<div class="rotate-[179.9deg]">
+					<div class="text-vertical rotate-[179.9deg]">
 						{name}
 					</div>
 				</div>
