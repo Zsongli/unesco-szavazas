@@ -17,6 +17,9 @@ export const load = (async ({ locals }) => {
             select: {
                 id: true,
                 name: true
+            },
+            orderBy: {
+                name: "asc"
             }
         })
     };
