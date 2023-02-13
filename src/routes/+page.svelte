@@ -32,8 +32,9 @@
 					class="font-bold"
 					gradient
 					gradientClass="text-transparent bg-clip-text bg-gradient-to-r from-teal-500 to-blue-700"
-					>szavazóalkalmazásában!</Span
 				>
+					szavazóalkalmazásában!
+				</Span>
 			</Heading>
 			<p class="text-sm sm:text-base md:text-lg lg:text-xl text-gray-400">
 				Itt szavazhatnak a zsűritagok a kedvenc UNESCO műsoraikra, az alkalmazás pedig összesíti a
@@ -50,7 +51,7 @@
 				<p class="text-sm sm:text-base md:text-lg lg:text-xl text-gray-400">
 					A következő lehetőségek állnak rendelkezésedre:
 				</p>
-				
+
 				{@const perms = data.user.role.permissions}
 				<div
 					class="flex flex-col justify-center gap-4 bg-gray-700 p-4 rounded-md self-stretch md:self-center sm:flex-row xl:self-stretch md:w-fit md:justify-start"
