@@ -32,7 +32,7 @@
 	>
 		<CustomUnescoGlobe class="text-2xl" />
 		<span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
-			UNESCO Szavazás
+			Gólyabál Szavazás
 		</span>
 	</NavBrand>
 	<div class="flex">
@@ -82,9 +82,9 @@
 			<CustomUnescoGlobe class="text-2xl" />
 		</a>
 		<div class="flex flex-col gap-1">
-			<span class="font-semibold text-sm uppercase dark:text-white"
-				>2024 - Szent László Gimnázium</span
-			>
+			<span class="font-semibold text-sm uppercase dark:text-white">
+                2024 - Szent László Gimnázium
+            </span>
 			<span class="text-xs">Fejlesztették: Makai Tamás, Mélykuti Ádám és Varga Benedek</span>
 		</div>
 	</div>

@@ -96,7 +96,7 @@
 							</Popover>
 						{/if}
 					{:else}
-							<div/>
+						<div />
 					{/if}
 					<div class="text-vertical rotate-[179.9deg]">
 						{name}
@@ -106,12 +106,11 @@
 		{/each}
 	</TableHead>
 	<TableBody>
-		{#each classes as { name, country }, i}
+		{#each classes as { name }, i}
 			<TableBodyRow class="border-gray-600 divide-x">
 				<TableBodyCell>
 					<div class="flex flex-col items-center">
 						<div>{name}</div>
-						<div class="text-xs">{country}</div>
 					</div>
 				</TableBodyCell>
 				{#each tableData[i] as place}

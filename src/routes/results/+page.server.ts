@@ -11,7 +11,7 @@ export const load = (async ({ locals }) => {
     const placementRecords = await locals.db.placement.findMany();
     const categories = categoryRecords.map(x => x.name);
     const categoryIds = categoryRecords.map(x => x.id);
-    const classes = classRecords.map(x => ({ name: x.name, country: x.country }));
+    const classes = classRecords.map(x => ({ name: x.name }));
     const classIds = classRecords.map(x => x.id);
     const groupResults = groupByProps(placementRecords, ["categoryId", "classId"]);
     const finalizedSet = makeValueSet(await locals.db.orderFinalized.findMany());

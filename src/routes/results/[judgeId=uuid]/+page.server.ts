@@ -14,7 +14,7 @@ export const load = (async ({ params, locals }) => {
     const categoryIds = categoryRecords.map(x => x.id);
     const classRecords = await locals.db.class.findMany();
     const classIds = classRecords.map(x => x.id);
-    const classes = classRecords.map(x => ({ name: x.name, country: x.country }));
+    const classes = classRecords.map(x => ({ name: x.name, }));
     const finalizedSet = new Set((await locals.db.orderFinalized.findMany({ where: { userId: judgeId } })).map(x => x.categoryId));
 
     const hideResults = !locals.session.user.role.permissions.includes('view-user-votes');

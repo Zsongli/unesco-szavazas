@@ -19,15 +19,15 @@
 </script>
 
 <svelte:head>
-	<title>Üdvözlet • UNESCO Szavazás</title>
-	<meta name="description" content="UNESCO Szavazás" />
+	<title>Üdvözlet • Gólyabál Szavazás</title>
+	<meta name="description" content="Gólyabál Szavazás" />
 </svelte:head>
 
 <div class="m-auto max-w-7xl flex flex-col items-center gap-2 mt-8 landscape:mt-16 px-8">
 	<div class="grid xl:grid-cols-[3fr,2fr] min-h-fit gap-14">
 		<div class="flex flex-col gap-6 xl:items-stretch items-center text-center xl:text-left">
 			<Heading tag="h2" class="!text-3xl sm:!text-4xl md:!text-5xl lg:!text-6xl">
-				Üdvözöllek az UNESCO műsorok
+				Üdvözöllek az Gólyabál
 				<Span
 					class="font-bold"
 					gradient
@@ -37,7 +37,7 @@
 				</Span>
 			</Heading>
 			<p class="text-sm sm:text-base md:text-lg lg:text-xl text-gray-400">
-				Itt szavazhatnak a zsűritagok a kedvenc UNESCO műsoraikra, az alkalmazás pedig összesíti a
+				Itt szavazhatnak a zsűritagok a kedvenc Gólyabál műsoraikra, az alkalmazás pedig összesíti a
 				szavazatokat a szervezők számára.
 			</p>
 			{#if !data.user}

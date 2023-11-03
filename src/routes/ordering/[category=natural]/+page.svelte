@@ -72,7 +72,7 @@
 <OrderableList
 	class="grow rounded-t-md w-full"
 	bind:items={order}
-	display={(entry) => ({ Osztály: entry.name, Ország: entry.country })}
+	display={(entry) => ({ Osztály: entry.name })}
 >
 	<svelte:fragment slot="grip-col-header">
 		<Button
