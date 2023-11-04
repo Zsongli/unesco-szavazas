@@ -8,8 +8,8 @@
 		TableBodyRow,
 		TableHead,
 		TableHeadCell,
-        Alert,
-        Span
+		Alert,
+		Span
 	} from "flowbite-svelte";
 	import type { PageData } from "./$types";
 	import FasUserPlus from "~icons/fa6-solid/user-plus";
@@ -20,15 +20,17 @@
 </script>
 
 <svelte:head>
-	<title>Felhasználók kezelése • UNESCO Szavazás</title>
+	<title>Felhasználók kezelése • Gólyabál Szavazás</title>
 </svelte:head>
 
 <div class="flex flex-col gap-8 py-8 w-5/6 m-auto">
 	<Heading tag="h3" class="text-center">Felhasználók kezelése</Heading>
-    <Alert color="red" dismissable>
-        <FasTriangleExclamation slot="icon" class="min-w-[16px]"/>
-        <Span class="font-medium !text-red-900">Figyelem!</Span> Az alkalmazás jelenlegi azonosítási rendszerének <Span italic class="!text-red-800">(JWT)</Span> működési elvei miatt a felhasználók adatai valójában csak a kijelentkezésük után frissülnek.
-      </Alert>
+	<Alert color="red" dismissable>
+		<FasTriangleExclamation slot="icon" class="min-w-[16px]" />
+		<Span class="font-medium !text-red-900">Figyelem!</Span> Az alkalmazás jelenlegi azonosítási rendszerének
+		<Span italic class="!text-red-800">(JWT)</Span> működési elvei miatt a felhasználók adatai valójában
+		csak a kijelentkezésük után frissülnek.
+	</Alert>
 	<Table divClass="relative overflow-x-auto thin-scrollbar rounded-lg">
 		<TableHead>
 			<TableHeadCell>Azonosító</TableHeadCell>

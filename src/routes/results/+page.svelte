@@ -20,7 +20,7 @@
 </script>
 
 <svelte:head>
-	<title>Eredmények • Összesítés • UNESCO Szavazás</title>
+	<title>Eredmények • Összesítés • Gólyabál Szavazás</title>
 </svelte:head>
 
 <Table divClass="relative overflow-x-auto rounded-t-lg thin-scrollbar" class="w-full">

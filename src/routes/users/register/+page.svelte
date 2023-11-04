@@ -36,7 +36,7 @@
 </script>
 
 <svelte:head>
-	<title>Regisztráció • UNESCO Szavazás</title>
+	<title>Regisztráció • Gólyabál Szavazás</title>
 </svelte:head>
 
 <div class="w-full max-w-md m-auto px-4 mt-8">

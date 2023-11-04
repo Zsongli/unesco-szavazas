@@ -23,7 +23,7 @@
 </script>
 
 <svelte:head>
-	<title>Jelszóváltoztatás • UNESCO Szavazás</title>
+	<title>Jelszóváltoztatás • Gólyabál Szavazás</title>
 </svelte:head>
 
 <div class="w-full max-w-sm m-auto px-4 mt-8">
