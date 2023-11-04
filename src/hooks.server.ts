@@ -20,11 +20,7 @@ db.$connect()
         },
         orderCategory: {
             data: [
-                { name: "Előadásmód" },
-                { name: "Díszlet" },
-                { name: "Információ" },
-                { name: "Tánc" },
-                { name: "Humor" }
+                { name: "Fődíj" }
             ]
         },
         class: {
