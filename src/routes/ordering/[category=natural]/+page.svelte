@@ -66,7 +66,7 @@
 </script>
 
 <svelte:head>
-	<title>Sorrend • {categoryName} • UNESCO Szavazás</title>
+	<title>Sorrend • {categoryName} • Gólyabál Szavazás</title>
 </svelte:head>
 
 <OrderableList

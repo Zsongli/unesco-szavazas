@@ -12,7 +12,7 @@
 	import FasKey from "~icons/fa6-solid/key";
 	import FasRightFromBracket from "~icons/fa6-solid/right-from-bracket";
 	import FabGithub from "~icons/fa6-brands/github";
-	import CustomUnescoGlobe from "~icons/custom/unesco-globe";
+	import CustomGolya from "~icons/custom/golya";
 	import CustomSzlgLogo from "~icons/custom/szlg-logo";
 	import { Toaster } from "svelte-french-toast";
 	import type { LayoutData } from "./$types";
@@ -30,7 +30,7 @@
 		href="/"
 		class="gap-2 py-2 px-4 rounded-xl dark:bg-white dark:bg-opacity-0 dark:hover:bg-opacity-10 bg-black bg-opacity-0 hover:bg-opacity-10"
 	>
-		<CustomUnescoGlobe class="text-2xl" />
+		<CustomGolya class="text-2xl" />
 		<span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
 			Gólyabál Szavazás
 		</span>
@@ -79,7 +79,7 @@
 >
 	<div class="flex gap-4">
 		<a href="/" class="flex items-center dark:text-white">
-			<CustomUnescoGlobe class="text-2xl" />
+			<CustomGolya class="text-2xl" />
 		</a>
 		<div class="flex flex-col gap-1">
 			<span class="font-semibold text-sm uppercase dark:text-white">

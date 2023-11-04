@@ -16,7 +16,7 @@ services:
       timeout: 5s
       retries: 5
   nodeweb:
-    image: unesco-web
+    image: golyabal-web
     build: .
     ports:
       - 3000:3000

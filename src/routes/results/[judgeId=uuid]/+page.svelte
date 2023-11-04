@@ -49,7 +49,7 @@
 </script>
 
 <svelte:head>
-	<title>Eredmények • {judgeName} • UNESCO Szavazás</title>
+	<title>Eredmények • {judgeName} • Gólyabál Szavazás</title>
 </svelte:head>
 
 <Table divClass="relative overflow-x-auto rounded-t-lg thin-scrollbar" class="w-full h-0">
