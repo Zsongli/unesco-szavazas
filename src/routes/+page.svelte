@@ -27,7 +27,7 @@
 	<div class="grid xl:grid-cols-[3fr,2fr] min-h-fit gap-14">
 		<div class="flex flex-col gap-6 xl:items-stretch items-center text-center xl:text-left">
 			<Heading tag="h2" class="!text-3xl sm:!text-4xl md:!text-5xl lg:!text-6xl">
-				Üdvözöllek az Gólyabál
+				Üdvözöllek a Gólyabál
 				<Span
 					class="font-bold"
 					gradient
