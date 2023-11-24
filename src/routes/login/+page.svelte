@@ -26,7 +26,9 @@
 		async ({ result, update }) => {
 			await update();
 			if (result.type != "redirect" && result.type != "error" && result.data?.message) {
-				if (result.type === "failure") toast.error(result.data.message);
+				if (result.type === "failure") toast.error(result.data.message, {
+				className: "!text-gray-500 !bg-white !shadow dark:!text-gray-400 dark:!bg-gray-800 !gap-3 !px-4 !py-2"
+			});
 				else if (result.type === "success") toast.success(result.data.message);
 			}
 		};

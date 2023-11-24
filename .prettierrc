@@ -2,6 +2,7 @@
 	"useTabs": true,
 	"singleQuote": false,
 	"trailingComma": "none",
+	"svelteBracketNewLine": true,
 	"printWidth": 100,
 	"plugins": ["prettier-plugin-svelte"],
 	"pluginSearchDirs": ["."],

@@ -9,12 +9,12 @@
 	export var data: PageData;
 
 	const photos = [
-		"https://szlgbp.hu/wp-content/uploads/2022/09/spanyol5_52333689069_o.jpg",
-		"https://szlgbp.hu/wp-content/uploads/2022/09/ciprus2_52332435237_o.jpg",
-		"https://szlgbp.hu/wp-content/uploads/2022/09/egyiptom4_52333626783_o.jpg",
-		"https://szlgbp.hu/wp-content/uploads/2022/09/konferansz1_52332435717_o.jpg",
-		"https://szlgbp.hu/wp-content/uploads/2022/09/kina2_52333819095_o.jpg",
-		"https://szlgbp.hu/wp-content/uploads/2022/09/egyiptom0_52333688359_o.jpg"
+		"spanyol5.jpg",
+		"ciprus2.jpg",
+		"egyiptom4.jpg",
+		"konferansz1.jpg",
+		"kina2.jpg",
+		"egyiptom0.jpg"
 	];
 </script>
 
@@ -82,7 +82,7 @@
 		>
 			<img
 				class="w-full h-full object-cover object-center"
-				src={photos[Math.floor(Math.random() * photos.length)]}
+				src="/homepage/{photos[Math.floor(Math.random() * photos.length)]}"
 				alt="UNESCO Műsor 2022"
 			/>
 		</a>

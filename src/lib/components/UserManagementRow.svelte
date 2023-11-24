@@ -11,7 +11,7 @@
 	import FasCheck from "~icons/fa6-solid/check";
 	import FasTrash from "~icons/fa6-solid/trash";
 	import "$lib/styles/tables.pcss";
-	import { createEventDispatcher } from "svelte";
+	import { createEventDispatcher, onMount } from "svelte";
 	import toast from "svelte-french-toast";
 
 	const dispatch = createEventDispatcher<{ del: {} }>();
@@ -60,7 +60,9 @@
 		});
 
 		if (res.ok) {
-			toast.success((await res.json()).message);
+			toast.success((await res.json()).message, {
+				className: "!text-gray-500 !bg-white !shadow dark:!text-gray-400 dark:!bg-gray-800 gap-4"
+			});
 			entry.name = name;
 			entry.email = email;
 			entry.role.id = Number(roleId);
@@ -81,10 +83,29 @@
 		} else toast.error((await res.json()).message ?? "Hiba történt a felhasználó törlése közben.");
 		deleting = false;
 	}
+
+	let uidHeight: number;
+
+	onMount(() => {
+		let uidElement = document.getElementById(`uid-${entry.id}`)!;
+
+		const onResize = () => (uidHeight = uidElement.clientHeight);
+		window.addEventListener("resize", onResize);
+		onResize();
+
+		return () => window.removeEventListener("resize", onResize);
+	});
 </script>
 
 <TableBodyRow class="divide-x divide-gray-700">
-	<TableBodyCell class="max-w-[5rem] overflow-auto thin-scrollbar">{entry.id}</TableBodyCell>
+	<TableBodyCell class="max-w-[5rem] !p-0" id="uid-{entry.id}">
+		<div
+			class="overflow-auto thin-scrollbar w-full h-full px-4 flex items-center"
+			style="height: {uidHeight}px;"
+		>
+			{entry.id}
+		</div>
+	</TableBodyCell>
 	<TableBodyCell class="min-w-[15rem]">
 		<Input type="text" bind:value={name} />
 	</TableBodyCell>
@@ -107,11 +128,11 @@
 					disabled={saving}
 					on:click={save}
 				>
-                    {#if saving}
-                        <Spinner color="white" size="3" />
-                    {:else}
-                        <FasCheck />
-                    {/if}
+					{#if saving}
+						<Spinner color="white" size="3" />
+					{:else}
+						<FasCheck />
+					{/if}
 				</Button>
 				<Popover triggeredBy="#save-{entry.id}">Mentés</Popover>
 			{/if}

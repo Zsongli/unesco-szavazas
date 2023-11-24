@@ -14,7 +14,7 @@
 	import FabGithub from "~icons/fa6-brands/github";
 	import CustomUnescoGlobe from "~icons/custom/unesco-globe";
 	import CustomSzlgLogo from "~icons/custom/szlg-logo";
-	import FlowbiteToaster from "$lib/components/flowbite-toast/Toaster.svelte";
+	import { Toaster } from "svelte-french-toast";
 	import type { LayoutData } from "./$types";
 	import { enhance } from "$app/forms";
 	import { navigating } from "$app/stores";
@@ -23,7 +23,7 @@
 	export var data: LayoutData;
 </script>
 
-<FlowbiteToaster />
+<Toaster />
 
 <Navbar class="border-b" navDivClass="mx-auto flex justify-between items-center">
 	<NavBrand
