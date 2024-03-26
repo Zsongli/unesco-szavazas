@@ -83,9 +83,9 @@
 		</a>
 		<div class="flex flex-col gap-1">
 			<span class="font-semibold text-sm uppercase dark:text-white"
-				>2022 - Szent László Gimnázium</span
+				>2024 - Szent László Gimnázium</span
 			>
-			<span class="text-xs">Fejlesztették: Makai Tamás és Mélykuti Ádám</span>
+			<span class="text-xs">Fejlesztették: Makai Tamás, Mélykuti Ádám és Varga Benedek</span>
 		</div>
 	</div>
 	<div class="flex space-x-4 sm:justify-center items-center">
