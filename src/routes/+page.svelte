@@ -5,20 +5,9 @@
 	import FasSquarePollVertical from "~icons/fa6-solid/square-poll-vertical";
 	import FasRightToBracket from "~icons/fa6-solid/right-to-bracket";
 	import FasUsersGear from "~icons/fa6-solid/users-gear";
+	import ImageDisplay from "$lib/components/ImageDisplay.svelte"
 
 	export var data: PageData;
-
-	const photos = [
-        "golyaB.jpg",
-        "golyaE.jpg",
-        "golyaE2.jpg",
-        "golyaF.jpg",
-        "golyaF2.jpg",
-        "golyaMIB.jpg",
-        "golyaShrek.jpg",
-        "golyaTuz.jpg",
-        "beni.jpg",
-	];
 </script>
 
 <svelte:head>
@@ -43,6 +32,8 @@
 				Itt szavazhatnak a zsűritagok a kedvenc Gólyabál műsoraikra, az alkalmazás pedig összesíti a
 				szavazatokat a szervezők számára.
 			</p>
+			<!-- image display on mobile -->
+			<ImageDisplay classes="block xl:hidden w-full m-8" />
 			{#if !data.user}
 				<p class="text-sm sm:text-base md:text-lg lg:text-xl text-gray-400">
 					A kezdéshez kérlek jelentkezz be!
@@ -77,17 +68,8 @@
 				</div>
 			{/if}
 		</div>
-		<a
-			href="https://flic.kr/s/aHBqjB5q3x"
-			rel="noreferrer"
-			target="_blank"
-			class="hidden xl:block justify-self-end w-[420px] h-[420px] rounded-2xl overflow-hidden shadow-2xl"
-		>
-			<img
-				class="w-full h-full object-cover object-center"
-				src="/homepage/{photos[Math.floor(Math.random() * photos.length)]}"
-				alt="Gólyabál 2023"
-			/>
-		</a>
+
+		<!-- image display on desktop -->
+		<ImageDisplay classes="hidden xl:block w-[420px] h-[420px]" />
 	</div>
 </div>
