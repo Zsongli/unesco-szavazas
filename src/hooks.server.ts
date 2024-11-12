@@ -27,6 +27,7 @@ db.$connect()
             data: [
                 { name: "KNYA" },
                 { name: "9.B" },
+                { name: "9.C" },
                 { name: "9.D" },
                 { name: "NYE" },
                 { name: "NYF" },
