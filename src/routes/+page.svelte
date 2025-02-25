@@ -5,17 +5,9 @@
 	import FasSquarePollVertical from "~icons/fa6-solid/square-poll-vertical";
 	import FasRightToBracket from "~icons/fa6-solid/right-to-bracket";
 	import FasUsersGear from "~icons/fa6-solid/users-gear";
+    import ImageDisplay from "$lib/components/ImageDisplay.svelte"
 
 	export var data: PageData;
-
-	const photos = [
-		"spanyol5.jpg",
-		"ciprus2.jpg",
-		"egyiptom4.jpg",
-		"konferansz1.jpg",
-		"kina2.jpg",
-		"egyiptom0.jpg"
-	];
 </script>
 
 <svelte:head>
@@ -40,6 +32,8 @@
 				Itt szavazhatnak a zsűritagok a kedvenc UNESCO műsoraikra, az alkalmazás pedig összesíti a
 				szavazatokat a szervezők számára.
 			</p>
+            <!-- image display on mobile -->
+			<ImageDisplay classes="block xl:hidden w-full m-8" />
 			{#if !data.user}
 				<p class="text-sm sm:text-base md:text-lg lg:text-xl text-gray-400">
 					A kezdéshez kérlek jelentkezz be!
@@ -74,17 +68,8 @@
 				</div>
 			{/if}
 		</div>
-		<a
-			href="https://szlgbp.hu/2022/09/12/unesco-musor-2022/"
-			rel="noreferrer"
-			target="_blank"
-			class="hidden xl:block justify-self-end w-[420px] h-[420px] rounded-2xl overflow-hidden shadow-2xl"
-		>
-			<img
-				class="w-full h-full object-cover object-center"
-				src="/homepage/{photos[Math.floor(Math.random() * photos.length)]}"
-				alt="UNESCO Műsor 2022"
-			/>
-		</a>
+
+		<!-- image display on desktop -->
+		<ImageDisplay classes="hidden xl:block w-[420px] h-[420px]" />
 	</div>
 </div>
