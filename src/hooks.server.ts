@@ -29,11 +29,11 @@ db.$connect()
         },
         class: {
             data: [
-                { name: "9.A", country: "Madagaszkár" },
-                { name: "10.B", country: "Dél-Korea" },
-                { name: "10.D", country: "Görögország" },
-                { name: "9.E", country: "Mexikó" },
-                { name: "9.F", country: "Argentína" }
+                { name: "9.A", country: "Törökország" },
+                { name: "10.B", country: "Japán" },
+                { name: "10.D", country: "India" },
+                { name: "9.E", country: "Thaiföld" },
+                { name: "9.F", country: "Kolumbia" }
             ]
         }
     }))
